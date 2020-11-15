@@ -328,6 +328,18 @@ function airtable_check() {
 			// update prev value to match what's in airtable (because looking for change next time around)
 			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
 
+    } else if (vals["compare_type"] == "longer-than") {
+
+			// if new value and it matches the expected value
+			if (!(vals["prev_val"] == airtable_val) && airtable_val.toString().length > parseInt(vals["value_val"])) {
+				// then it's a match!
+				set_attribute(div, "table", "class", "airtable_active");
+				do_action(vals);
+			} else { set_attribute(div, "table", "class", "airtable_inactive"); }
+
+			// update prev value to match what's in airtable (because looking for change next time around)
+			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+
 		} else {
 			alert("unknown compare type (" + vals["compare_type"] + ") in div #" + i + "; please check");
 		}
@@ -378,11 +390,17 @@ function setup_local() {
 			case "equal":
 				compare_text = "equals";
 				break;
+      case "not-equal":
+				compare_text = "not equal to";
+				break;
 			case "less-than":
 				compare_text = "less than";
 				break;
 			case "greater-than":
 				compare_text = "greater than";
+				break
+      case "longer-than":
+				compare_text = "is longer than";
 				break
 		}
 
