@@ -1,0 +1,57 @@
+<html><head>
+  <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+  <script src="airtable_script.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    td {
+      padding: 10px;
+      vertical-align: top;
+    }
+  </style>
+</head>
+<body type="remote">
+
+  <!-- AIRTABLE SERVICE DOCK -->
+  <div id="servicedock" style="float:right;">
+    <service-airtable id="service_airtable" apikey = "" baseid = "" tablename = ""></service-airtable>
+  </div>
+
+  <!-- WELCOME -->
+  <p>
+    <h1>Hello SPIKE</h1>
+    <br />
+    <img src="logo.png" width="100px" height="100px">
+  </p>
+
+  <!-- EMBED THE LIVE VIDEO -->
+
+
+  <!-- CONTROL THE ROBOT -->
+  <table><tr>
+    <td>
+
+      <h2>Display Text on the Robot</h2>
+      <p>
+        <form type='textinput'>
+            <input type='text' airtable_value='text_input'>
+            <input type='button' value='Show Text'>
+        </form>
+      </p>
+
+    </td><td>
+
+
+      <h2>Move the Robot</h2>
+      <p>
+        <button airtable_value='action'>Spin Left</button>
+        <button airtable_value='action'>Spin Right</button>
+        <button airtable_value='action'>Stop</button>
+      </p>
+
+    </td>
+  </tr></table>
+
+  <p style="font-size: x-small"><a href="HelloSPIKE.html">Robot Code</a></p>
+
+</body>
+</html>

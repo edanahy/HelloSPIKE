@@ -1,0 +1,62 @@
+/* This is where you can make changes to the
+appearance of your different blocks.
+
+For info on CSS, copy and paste the link
+below into your browser!
+
+https://www.w3schools.com/css/default.asp
+
+*/
+
+.buttonBlock{
+    /*Give your button block some style!
+    Add color, change the border, and
+    change the size using CSS styling*/
+    background-color:lightblue;
+    border:solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+    width:30%;
+}
+
+.sliderBlock{
+    /*Give your slider block some style!
+    Add color, change the border, and
+    change the size using CSS styling*/
+    background-color:orange;
+    border:solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+    width:30%;
+}
+
+.textBlock{
+    /*Give your text block some style!
+    Add color, change the border, and
+    change the size using CSS styling*/
+    background-color:lightgreen;
+    border:solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+    width:30%;
+}
+
+.airtable_active {
+	background-color: lightgreen;
+	padding: 5px;
+}
+.airtable_active td {
+	padding: 5px;
+	vertical-align: top;
+}
+.airtable_inactive {
+	background-color: none;
+	padding: 5px;
+}
+.airtable_inactive td {
+	padding: 5px;
+	vertical-align: top;
+}
