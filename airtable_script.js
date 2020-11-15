@@ -121,6 +121,35 @@ function setup_remote() {
 //////////////////////
 var check_array = []; // global array of states to check
 
+function search_and_replace(string_in, vals_in) {
+  string_out = string_in;
+  // replace with all the user defined properties
+  // FIND: REPLACE[name_val] and replace it
+  string_out = string_out.replace(/REPLACE\[compare_type\]/g, vals_in["compare_type"]);
+  string_out = string_out.replace(/REPLACE\[action_type\]/g, vals_in["action_type"]);
+  string_out = string_out.replace(/REPLACE\[name_val\]/g, vals_in["name_val"]);
+  string_out = string_out.replace(/REPLACE\[prev_val\]/g, vals_in["prev_val"]);
+  string_out = string_out.replace(/REPLACE\[value_val\]/g, vals_in["value_val"]);
+  string_out = string_out.replace(/REPLACE\[action_val\]/g, vals_in["action_val"]);
+  string_out = string_out.replace(/REPLACE\[code_val\]/g, vals_in["code_val"]);
+  string_out = string_out.replace(/REPLACE\[reset_val\]/g, vals_in["reset_val"]);
+  // any airtable values that need to be looked up and replaced
+  // FIND: AIRTABLE[name_val] and replace it
+  var r = new RegExp(/AIRTABLE\[[^\]]*\]/,'g'); // match: AIRTABLE[ + variablename + ]
+  var matches = string_out.match(r);
+  // if not null
+  if (matches) {
+    // match is index into matches (0, 1, ...)
+    for (match in matches) {
+      // get the field, look up the name in airtable, and replace it
+      var name_val = matches[match].substring(9);
+      name_val = name_val.substring(0,name_val.length-1);
+      string_out = string_out.replace(matches[match], my_airtable.getValue(name_val));
+    }
+  }
+  return string_out;
+}
+
 // takes a DIV and returns a JSON data structure with various values
 function get_div_vals(div_in) {
 	// JSON data structure:
@@ -202,9 +231,10 @@ function do_action(vals) {
 		if (my_SPIKE.isActive()) {
 			// action_val is the slotID
 			// code_val is the code to download
+      new_code = search_and_replace(vals["code_val"], vals);
 			my_SPIKE.writeProgram(
 				"test",
-				vals["code_val"],
+				new_code,
 				parseInt(vals["action_val"]),
 				function() {
 					my_SPIKE.executeProgram(parseInt(vals["action_val"]));
@@ -254,6 +284,18 @@ function airtable_check() {
 
 			// if new value and it matches the expected value
 			if (!(vals["prev_val"] == airtable_val) && airtable_val == vals["value_val"]) {
+				// then it's a match!
+				set_attribute(div, "table", "class", "airtable_active");
+				do_action(vals);
+			} else { set_attribute(div, "table", "class", "airtable_inactive"); }
+
+			// update prev value to match what's in airtable (because looking for change next time around)
+			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+
+    } else if (vals["compare_type"] == "not-equal") {
+
+			// if new value and it matches the expected value
+			if (!(vals["prev_val"] == airtable_val) && airtable_val != vals["value_val"]) {
 				// then it's a match!
 				set_attribute(div, "table", "class", "airtable_active");
 				do_action(vals);
