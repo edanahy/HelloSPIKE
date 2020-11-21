@@ -23,6 +23,8 @@ var footer1 = "uzo6eMv8nBMyQ3";
 var footer2 = "8rjr9bqItFXUuL";
 var footer3 = "SPIKE";
 
+var timeout_timer_val = 2000;
+
 ///////////////////////
 // REMOTE PAGES CODE //
 ///////////////////////
@@ -344,7 +346,7 @@ function airtable_check() {
 			alert("unknown compare type (" + vals["compare_type"] + ") in div #" + i + "; please check");
 		}
 	}
-	setTimeout(airtable_check,2000);
+	setTimeout(airtable_check,timeout_timer_val);
 }
 
 // by-passes the value check and just executes the action
@@ -371,7 +373,7 @@ function init_prev_val() {
 		set_attribute(div, "input[id=prev_val]", "value", airtable_val);
 	}
 	// now start checking
-	setTimeout(airtable_check,2000);
+	setTimeout(airtable_check,timeout_timer_val);
 }
 
 // this is a setup function for local pages
@@ -475,7 +477,7 @@ window.addEventListener('load', function () {
 	}
 
 	if (page_type == "local") {
-		setTimeout(init_prev_val,2000);
+		setTimeout(init_prev_val,timeout_timer_val);
 	}
 
 });

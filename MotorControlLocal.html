@@ -3,6 +3,10 @@
   <script src="airtable_script.js" charset="utf-8"></script>
   <link rel="stylesheet" href="style.css" />
   <script language="JavaScript">
+
+    // overwrite the timer value:
+    timeout_timer_val = 750; // check faster
+
     function update_motor_num(elem) {
       new_motor_num = elem.value;
       document.getElementById("name_val").value = "motor" + new_motor_num.toString();
@@ -13,11 +17,30 @@
     function SPIKE_move_motor(name_val, value_val) {
         motor_port = document.getElementById("motor_port").value;
 				if (my_SPIKE.isActive()) {
+          my_SPIKE.PrimeHub().light_matrix.off();
 					// look up the current value stored in Airtable
 					motor_speed = parseInt(my_airtable.getValue(vals["name_val"]));
           motor_speed = Math.max(Math.min(motor_speed, 100), -100); // make sure in range -100 to 100
 					my_SPIKE.Motor(motor_port).start(motor_speed);
           document.getElementById("motor_speed_from_airtable").value = motor_speed;
+          var timeout = 250;
+          if (motor_speed < 0) {
+            setTimeout(function() {
+              console.log("set timeout: write <");
+              my_SPIKE.PrimeHub().light_matrix.write('<');
+            }, timeout);
+          } else if (motor_speed == 0) {
+            setTimeout(function() {
+              console.log("set timeout: write X");
+              my_SPIKE.PrimeHub().light_matrix.write('X');
+            }, timeout);
+          } else {
+            // motor speed > 0
+            setTimeout(function() {
+              console.log("set timeout: write >");
+              my_SPIKE.PrimeHub().light_matrix.write('>');
+            }, timeout);
+          }
 				} else {
 					init_spike_error("in SPIKE_move_motor");
 				}
