@@ -91,34 +91,45 @@
 
   <p><a href="https://docs.google.com/presentation/d/1mJocURYhKTREILhA1RT9PZfyO_GbQvhapKy_znGw2YA/edit?usp=sharing">Robot Build Instructions</a></p>
 
-  <p>Pick your Breakout Room:
-    <select name="motor_num" id="motor_num" onchange="return update_motor_num(this);">
-      <option value="01" selected>01</option>
-      <option value="02">02</option>
-      <option value="03">03</option>
-      <option value="04">04</option>
-      <option value="05">05</option>
-      <option value="06">06</option>
-    </select>
-  </p>
+  <div style="border: 1px solid; padding: 2px; background-color: rgba(255,255,153,0.8)">
 
-  <p>Pick your Motor Port:
-    <select name="motor_port" id="motor_port">
-      <option value="A" selected>A</option>
-      <option value="B">B</option>
-      <option value="C">C</option>
-      <option value="D">D</option>
-      <option value="E">E</option>
-      <option value="F">F</option>
-    </select>
-  </p>
+    <p><b>Change these:</b></p>
+
+    <blockquote>
+
+      <p>Pick your Breakout Room:
+        <select name="motor_num" id="motor_num" onchange="return update_motor_num(this);">
+          <option value="01" selected>01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+        </select>
+      </p>
+
+      <p>Pick your Motor Port:
+        <select name="motor_port" id="motor_port">
+          <option value="A" selected>A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+        </select>
+      </p>
+
+    </blockquote>
+  </div>
+
+  <p><b>These will update automatically:</b></p>
 
   <div type="airtable-check" compare="changes" action="run-js">
     <input type=text id="name_val" value="motor01">
     <input type=text id="action_val" value="SPIKE_move_motor">
   </div>
 
-  <p>Motor Speed from Airtable: <input type=text value="X" id="motor_speed_from_airtable"></p>
+  <p>Motor Speed from Airtable: <input type=text value="X" id="motor_speed_from_airtable" size="4"></p>
 
    <p>[ <a href="" onclick="return refresh_embedded_airtable();">refresh airtable data</a> ]</p>
    <!-- AIRTABLE EMBED: copy "Share view" code, change size to width="600" height="400" -->
