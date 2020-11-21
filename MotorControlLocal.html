@@ -10,8 +10,8 @@
       return false;
     }
 
-    var motor_port = "A";
     function SPIKE_move_motor(name_val, value_val) {
+        motor_port = document.getElementById("motor_port").value;
 				if (my_SPIKE.isActive()) {
 					// look up the current value stored in Airtable
 					motor_speed = parseInt(my_airtable.getValue(vals["name_val"]));
@@ -44,7 +44,7 @@
   <hr>
 
   <h2>Controls:</h2>
-  
+
   <p>Pick your Breakout Room:
     <select name="motor_num" id="motor_num" onchange="return update_motor_num(this);">
       <option value="01" selected>01</option>
