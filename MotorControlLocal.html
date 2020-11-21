@@ -1,0 +1,82 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+  <script src="airtable_script.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script language="JavaScript">
+    function update_motor_num(elem) {
+      new_motor_num = elem.value;
+      document.getElementById("name_val").value = "motor" + new_motor_num.toString();
+      console.log("Updated field (name_val) to be: " + document.getElementById("name_val").value);
+      return false;
+    }
+
+    var motor_port = "A";
+    function SPIKE_move_motor(name_val, value_val) {
+				if (my_SPIKE.isActive()) {
+					// look up the current value stored in Airtable
+					motor_speed = parseInt(my_airtable.getValue(vals["name_val"]));
+          motor_speed = Math.max(Math.min(motor_speed, 100), -100); // make sure in range -100 to 100
+					my_SPIKE.Motor(motor_port).start(motor_speed);
+          document.getElementById("motor_speed_from_airtable").value = motor_speed;
+				} else {
+					init_spike_error("in SPIKE_move_motor");
+				}
+    }
+  </script>
+</head>
+<body type=local>
+
+  <div id="servicedock" style="float:right;">
+    <!-- AIRTABLE SERVICE -->
+    <service-airtable id="service_airtable" apikey = "" baseid = "" tablename = ""></service-airtable>
+    <!-- SPIKE Prime Service -->
+    <service-spike id="service_spike"></service-spike>
+  </div>
+
+  <h1>Robot Control</h1>
+
+  <p style="color: red"><b><em>NOTE:</em> This code is for controlling the robot.  It's run locally and interacts with the robot via Serial.</b></p>
+
+  <p>Unless you know what you are doing, you probably are supposed to be here:</p>
+
+  <p><a href="MotorControl.html">Return to the main Motor Control Page</a></p>
+
+  <hr>
+
+  <h2>Controls:</h2>
+  
+  <p>Pick your Breakout Room:
+    <select name="motor_num" id="motor_num" onchange="return update_motor_num(this);">
+      <option value="01" selected>01</option>
+      <option value="02">02</option>
+      <option value="03">03</option>
+      <option value="04">04</option>
+      <option value="05">05</option>
+      <option value="06">06</option>
+    </select>
+  </p>
+
+  <p>Pick your Motor Port:
+    <select name="motor_port" id="motor_port">
+      <option value="A" selected>A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+      <option value="E">E</option>
+      <option value="F">F</option>
+    </select>
+  </p>
+
+  <div type="airtable-check" compare="changes" action="run-js">
+    <input type=text id="name_val" value="motor01">
+    <input type=text id="action_val" value="SPIKE_move_motor">
+  </div>
+
+  <p>Motor Speed from Airtable: <input type=text value="X" id="motor_speed_from_airtable"></p>
+
+   <p>[ <a href="" onclick="return refresh_embedded_airtable();">refresh airtable data</a> ]</p>
+   <!-- AIRTABLE EMBED: copy "Share view" code, change size to width="600" height="400" -->
+   <iframe class="airtable-embed" src="https://airtable.com/embed/shrH7MPbySnPnn6qx?backgroundColor=cyan&viewControls=on" frameborder="0" onmousewheel="" width="600" height="500" style="background: transparent; border: 1px solid #ccc;"></iframe>
+
+</body>
+</html>
