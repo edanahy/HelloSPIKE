@@ -49,13 +49,6 @@
 </head>
 <body type=local>
 
-  <div id="servicedock" style="float:right;">
-    <!-- AIRTABLE SERVICE -->
-    <service-airtable id="service_airtable" apikey = "" baseid = "" tablename = ""></service-airtable>
-    <!-- SPIKE Prime Service -->
-    <service-spike id="service_spike"></service-spike>
-  </div>
-
   <h1>Robot Control</h1>
 
   <p style="color: red"><b><em>NOTE:</em> This code is for controlling the robot.  It's run locally and interacts with the robot via Serial.</b></p>
@@ -65,17 +58,34 @@
     <a href="MotorControl.html">Return to the main Motor Control Page</a>
   </p>
 
-  <p>Experimental demo created by:</p>
-
-  <p>
-    <a href="http://ceeo.tufts.edu" target=_blank><img src="TuftsCEEO.png"></a>
-    <br><br>
-    For more information, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
-  </p>
-
-  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
-
   <hr>
+
+  <div style="border: 1px solid; padding: 2px; background-color: rgba(255,255,153,0.8)">
+    <div id="servicedock" style="float:right; padding: 10px;">
+      <!-- AIRTABLE SERVICE -->
+      <service-airtable id="service_airtable" apikey = "" baseid = "" tablename = ""></service-airtable>
+      <!-- SPIKE Prime Service -->
+      <service-spike id="service_spike"></service-spike>
+    </div>
+  <p>
+    <b>To use the SPIKE™ Prime hardware,</b> you must enable the WebSerial API in your browser. To do so, please make sure:
+    <ul>
+        <li>You are using the Google Chrome browser.</li>
+        <li>The following chrome flags are enabled on <b>chrome://flags</b>.</li>
+        <ul>
+          <li>Mac OSX user? <em>#enable-experimental-web-platform-features</em></li>
+          <li>Windows user? <em>#enable-experimental-web-platform-features</em> <b>AND</b> <em>#new-usb-backend</em></li>
+        </ul>
+    </ul>
+
+    <b>To enable these flags:</b>
+    <ol>
+        <li>In your Browser URL, visit <b>chrome://flags</b></li>
+        <li>Set the your required flags to "Enabled" via dropdown</li>
+        <li>Relaunch the browser to have changes take effect</li>
+        <li>Revisit this page and activate the SPIKE™ Prime Service Dock (top right)</li>
+    </ol>
+  </p></div>
 
   <h2>Controls:</h2>
 
@@ -111,6 +121,18 @@
    <p>[ <a href="" onclick="return refresh_embedded_airtable();">refresh airtable data</a> ]</p>
    <!-- AIRTABLE EMBED: copy "Share view" code, change size to width="600" height="400" -->
    <iframe class="airtable-embed" src="https://airtable.com/embed/shrH7MPbySnPnn6qx?backgroundColor=cyan&viewControls=on" frameborder="0" onmousewheel="" width="600" height="500" style="background: transparent; border: 1px solid #ccc;"></iframe>
+
+   <hr>
+
+   <p>Experimental demo created by:</p>
+
+   <p>
+     <a href="http://ceeo.tufts.edu" target=_blank><img src="TuftsCEEO.png"></a>
+     <br><br>
+     For more information, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+   </p>
+
+   <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
 
 </body>
 </html>
