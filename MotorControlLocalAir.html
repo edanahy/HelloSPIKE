@@ -1,12 +1,12 @@
 <head>
   <title>Motor Control Challenge</title>
   <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
-  <script src="systemlink_script.js" charset="utf-8"></script>
+  <script src="airtable_script.js" charset="utf-8"></script>
   <link rel="stylesheet" href="style.css" />
   <script language="JavaScript">
 
     // overwrite the timer value:
-    timeout_timer_val = 250; // check faster
+    timeout_timer_val = 750; // check faster
 
     function update_motor_num(elem) {
       new_motor_num = elem.value;
@@ -20,10 +20,10 @@
 				if (my_SPIKE.isActive()) {
           my_SPIKE.PrimeHub().light_matrix.off();
 					// look up the current value stored in Airtable
-					motor_speed = parseInt(my_systemlink.getTagValue(vals["name_val"]));
+					motor_speed = parseInt(my_airtable.getValue(vals["name_val"]));
           motor_speed = Math.max(Math.min(motor_speed, 100), -100); // make sure in range -100 to 100
 					my_SPIKE.Motor(motor_port).start(motor_speed);
-          document.getElementById("motor_speed_from_systemlink").value = motor_speed;
+          document.getElementById("motor_speed_from_airtable").value = motor_speed;
           var timeout = 250;
           if (motor_speed < 0) {
             setTimeout(function() {
@@ -64,7 +64,7 @@
   <div style="border: 1px solid; padding: 2px; background-color: rgba(255,255,153,0.8)">
     <div id="servicedock" style="float:right; padding: 10px;">
       <!-- AIRTABLE SERVICE -->
-      <service-systemlink id="service_systemlink" apikey=""></service-systemlink>
+      <service-airtable id="service_airtable" apikey = "" baseid = "" tablename = ""></service-airtable>
       <!-- SPIKE Prime Service -->
       <service-spike id="service_spike"></service-spike>
     </div>
@@ -126,14 +126,18 @@
 
   <p><b>These will update automatically:</b></p>
 
-  <div type="systemlink-check" compare="changes" action="run-js">
+  <div type="airtable-check" compare="changes" action="run-js">
     <input type=text id="name_val" value="motor01">
     <input type=text id="action_val" value="SPIKE_move_motor">
   </div>
 
-  <p>Motor Speed from Systemlink: <input type=text value="X" id="motor_speed_from_systemlink" size="4"></p>
+  <p>Motor Speed from Airtable: <input type=text value="X" id="motor_speed_from_airtable" size="4"></p>
 
-  <hr>
+   <p>[ <a href="" onclick="return refresh_embedded_airtable();">refresh airtable data</a> ]</p>
+   <!-- AIRTABLE EMBED: copy "Share view" code, change size to width="600" height="400" -->
+   <iframe class="airtable-embed" src="https://airtable.com/embed/shrH7MPbySnPnn6qx?backgroundColor=cyan&viewControls=on" frameborder="0" onmousewheel="" width="600" height="500" style="background: transparent; border: 1px solid #ccc;"></iframe>
+
+   <hr>
 
    <p>Experimental demo created by:</p>
 

@@ -1,15 +1,15 @@
 <html><head>
   <title>Motor Control Challenge</title>
   <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
-  <script src="systemlink_script.js" charset="utf-8"></script>
+  <script src="airtable_script.js" charset="utf-8"></script>
   <link rel="stylesheet" href="style.css" />
   <script language="JavaScript">
     var delta_change = 10; // how much to change the motor each click
-    function update_systemlink(elem) {
+    function update_airtable(elem) {
       // what motor are they changing?
       motor_num = document.getElementById("motor_num").value;
       // get the current value from airtable
-      current_motor_value = parseInt(my_systemlink.getTagValue('motor' + motor_num.toString()));
+      current_motor_value = parseInt(my_airtable.getValue('motor' + motor_num.toString()));
       console.log("Current motor" + motor_num.toString() + " value: " + current_motor_value);
       if (elem.name == "MINUS") {
         current_motor_value = Math.max(current_motor_value - delta_change, -100);
@@ -21,7 +21,7 @@
       }
       // update airtable
       console.log("New motor" + motor_num.toString() + " value: " + current_motor_value);
-      my_systemlink.setTagValue('motor' + motor_num.toString(), current_motor_value);
+      my_airtable.updateValue('motor' + motor_num.toString(), current_motor_value);
       return false;
     }
   </script>
@@ -36,7 +36,7 @@
 
   <!-- AIRTABLE SERVICE DOCK -->
   <div id="servicedock" style="float:right;">
-    <service-systemlink id="service_systemlink" apikey=""></service-systemlink>
+    <service-airtable id="service_airtable" apikey = "" baseid = "" tablename = ""></service-airtable>
   </div>
 
   <img src="MotorControlChallenge.png" style="float:right; padding: 10px;" />
@@ -62,10 +62,10 @@
     <td align=middle style="background-color: rgba(76, 201, 76, 0.3);">Clock Wise</td>
   </tr><tr>
     <td align=middle style="background-color: rgba(201, 76, 76, 0.3);">
-      <input type='button' name='MINUS' value="Add CCW Speed" onclick="return update_systemlink(this);"></input>
+      <input type='button' name='MINUS' value="Add CCW Speed" onclick="return update_airtable(this);"></input>
     </td>
     <td align=middle style="background-color: rgba(76, 201, 76, 0.3);">
-      <input type='button' name='PLUS' value="Add CW Speed" onclick="return update_systemlink(this);"></input>
+      <input type='button' name='PLUS' value="Add CW Speed" onclick="return update_airtable(this);"></input>
     </td>
   </tr></table>
 
