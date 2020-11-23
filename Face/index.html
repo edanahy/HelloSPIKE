@@ -1,0 +1,105 @@
+<html>
+<head>
+	<title>Face Detector</title>
+	<script type="text/javascript" src="ccv.js"></script>
+	<script type="text/javascript" src="face.js"></script>
+	<script type="text/javascript" src="face_functions.js"></script>
+	<style>
+		pre code {
+		  background-color: #eee;
+		  border: 1px solid #999;
+		  display: block;
+		  padding: 20px;
+		}
+	</style>
+</head>
+<body onload="face_detection_setup();">
+	<h1>Face Detection</h1>
+
+	<table border=1><tr>
+		<td rowspan="2">
+			<video id="video" autoplay></video>
+		</td>
+		<td align=middle>
+			<button id="track">Track Faces</button><br />
+			<canvas id="face_detection"></canvas><br />
+			<span>Detected</span>
+		</td>
+	</tr><tr>
+		<td>
+			<table>
+				<tr><td colspan=2 align=middle>
+					<input type="range" min="0" max="255" value="128" id="threshold">
+				</td><td align=middle>
+					<button id="save">Save Face</button>
+				</td></tr>
+				<tr><td align=middle>
+					<canvas id="current_face"></canvas><br />Face
+				</td><td align=middle>
+					<canvas id="black_and_white"></canvas><br />B&W
+				</td><td align=middle>
+					<canvas id="saved_face"></canvas><br />Saved
+				</td></tr>
+			</table>
+		</td>
+	</tr></table>
+
+	<canvas id="tmp_face" style="display: none"></canvas>
+	
+	<!-- display none because user can't change, so don't give them the option -->
+	<span style="display:none">
+		<p>Output image resolution (in pixels): <input type=text id="output_resolution" value="100" size=4> (width and heigh the same)</p>
+	</span>
+
+	<p style="font-size: x-small"><b>Debugging:</b>
+		<ul style="font-size: x-small">
+			<li>Input image dimensions: <span id="input_image_dim"></span></li>
+			<li>Output image dimensions: <span id="output_image_dim"></span></li>
+			<li>Face image dimensions: <span id="face_image_dim"></span></li>
+			<li>Num Faces: <span id="num-faces"></span></li>
+		</ul>
+	</p>
+	
+	<script language="JavaScript">
+		// function for copying Python code to the computer's clipboard
+		async function copy_to_clipboard() {
+			var copy_text = document.getElementById("pixel_list").innerHTML;
+			// replace HTML elements "<" and ">" to proper values
+			copy_text = copy_text.replace("&lt;", "<");
+			copy_text = copy_text.replace("&gt;", ">");
+			// try copying to clipboard
+			try {
+				// 1) Copy text
+				await navigator.clipboard.writeText(copy_text);
+				// 2) Catch errors
+			} catch (err) {
+				console.error('Failed to copy: ', err);
+			}
+		}
+	</script>
+	<p>Python3 code for printing ASCII image to terminal (copy, paste to local file, and run w/ Python3):
+		<input type=button onclick="copy_to_clipboard();" value="Copy to Clipboard">
+		<pre><code id="pixel_list" style="font-size: smaller"></code></pre>
+	</p>
+
+	<!-- PYTHON CODE for doing ASCII art version of BW image -->
+	<div id="pixel_list_orig" style="display: none">
+# this is list of all black pixels (num black pixels is NUM_PIXELS):
+array = REPLACE_WITH_PIXEL_ARRAY
+image_width = 100
+image_height = 100
+# go through and print space for white and mark for black
+current_i = 0
+for col in range(image_width):
+	for row in range(image_height):
+		if (current_i < len(array)):
+			if (array[current_i][0] == col and array[current_i][1] == row):
+				print("██",end="")
+				current_i = current_i + 1
+			else:
+				print("  ",end="")
+	print("")
+print("num black pixels = " + str(current_i))</div>
+
+</body>
+</html>
