@@ -1,0 +1,76 @@
+<html>
+  <title>Project: Motor Control Challenge (Remote)</title>
+  <head>
+    <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+    <script src="../src/secret.js" charset="utf-8"></script>
+    <script src="../src/cloud.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../src/style.css" />
+    <script>
+    </script>
+    <style>
+      td {
+        padding: 10px;
+        vertical-align: top;
+      }
+    </style>
+  </head>
+<body>
+
+  <!-- SERVICE DOCK -->
+  <div id="servicedock">
+    <service-systemlink id="service_systemlink"></service-systemlink>
+  </div>
+
+  <table><tr>
+    <td>
+
+      <h1>Project: Motor Control Challenge</h1>
+
+      <p>Change the motor speed to try and stop the pointer straight up!</p>
+
+      <h2>Remote Interface</h2>
+
+      <p><b>Control the Robot:</b></p>
+
+      <table border=1 align=center><tr>
+        <td align=middle style="background-color: rgba(201, 76, 76, 0.3);">Counter-Clock Wise</td>
+        <td align=middle style="background-color: rgba(76, 201, 76, 0.3);">Clock Wise</td>
+      </tr><tr>
+        <td align=middle style="background-color: rgba(201, 76, 76, 0.3);">
+          <button cloud_action='increment' cloud_name='motor01' cloud_min='-100' cloud_max='100' cloud_value='-10'>Add CCW Speed</button>
+        </td>
+        <td align=middle style="background-color: rgba(76, 201, 76, 0.3);">
+          <button cloud_action='increment' cloud_name='motor01' cloud_min='-100' cloud_max='100' cloud_value='10'>Add CCW Speed</button>
+        </td>
+      </tr></table>
+
+    </td><td>
+
+      <img src="./MotorControlChallenge.png" style="float:right; padding: 10px;" />
+
+    </td></tr>
+  </table>
+
+  <hr />
+
+  <p>Do you have a SPIKE Prime?
+    <a href="./SPIKEControl.html" target=_blank>Here is the SPIKE Prime Control page.</a>
+  </p>
+
+  <!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+</body>
+</html>

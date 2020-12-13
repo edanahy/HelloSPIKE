@@ -9,19 +9,15 @@ This is for Dr. E's EN1 class final projects (Fall 2020)
 // page type
 var page_type; // local or remote
 
-// global variables for interacting with Service Dock's Airtable Service
-var airtableElement;
-var my_airtable;
+// global variables for interacting with Service Dock's SystemLink Service
+var systemlinkElement;
+var my_systemlink;
 var my_SPIKE;
 
 var do_alerts = false; // change to "false" to not show alerts
 
-var header1 = "key";
-var header2 = "app";
-var header3 = "Hello";
-var footer1 = "uzo6eMv8nBMyQ3";
-var footer2 = "8rjr9bqItFXUuL";
-var footer3 = "SPIKE";
+var header1 = "QHSfJ7oiisPl_2zQXTzn89fzfhfDACm";
+var footer1 = "NN6s7Qtc85";
 
 var timeout_timer_val = 2000;
 
@@ -29,9 +25,9 @@ var timeout_timer_val = 2000;
 // REMOTE PAGES CODE //
 ///////////////////////
 
-function updateOnAirtable(key, newValue) {
+function updateOnSystemlink(key, newValue) {
     /* check if given key already exists on Airtable*/
-    var names = my_airtable.getNames();
+    var names = my_systemlink.getTagsInfo();
     var exists = false;
     for (var index in names) {
         if (names[index] == key) {
@@ -40,59 +36,59 @@ function updateOnAirtable(key, newValue) {
         }
     }
     // added to overcome "trim" error in ServiceDock
-    if (String(newValue).length == 0) { newValue = ' '; }
+    if (String(newValue).length == 0) { newValue = ''; }
 
     // key already exists, only update
     if (exists) {
         // update key and value on Airtable
-        my_airtable.updateValue(key, newValue);
+        my_systemlink.setTagValue(key, newValue);
     }
     // key does not exist, create a new pair
     else {
-        my_airtable.createNameValuePair(key, newValue)
+        my_systemlink.createTag(key, newValue)
     }
 }
 
 //Wrapper functions for updating airtable based on button, slider, and text input
 function button_function(elem) {
     // retrieve key & value pairs from buttons' attributes
-    var key = elem.getAttribute('airtable_value');
+    var key = elem.getAttribute('systemlink_value');
     var newValue = elem.innerHTML;
 
     // update or create Name & Value pair on Airtable
-    updateOnAirtable(key, newValue);
+    updateOnSystemlink(key, newValue);
 
     // alert user of change
     if (do_alerts) {
-      alert('Set airtable attribute "' + key + '" to be "' + newValue + '"');
+      alert('Set systemlink attribute "' + key + '" to be "' + newValue + '"');
     }
 
 }
 function range_function(elem) {
     // retrieve key & value pairs from buttons' attributes
-    var key = elem.getAttribute('airtable_value');
+    var key = elem.getAttribute('systemlink_value');
     var newValue = elem.value;
 
     // update or create Name & Value pair on Airtable
-    updateOnAirtable(key, newValue);
+    updateOnSystemlink(key, newValue);
 
     // alert user of change
     if (do_alerts) {
-      alert('Set airtable attribute "' + key + '" to be "' + newValue + '"');
+      alert('Set systemlink attribute "' + key + '" to be "' + newValue + '"');
     }
 }
 
 function text_function(elem){
     // retrieve key & value pairs from buttons' attributes
-    var key = elem.getAttribute('airtable_value');
+    var key = elem.getAttribute('systemlink_value');
     var newValue = elem.value;
 
     // update or create Name & Value pair on Airtable
-    updateOnAirtable(key, newValue);
+    updateOnSystemlink(key, newValue);
 
     // alert user of change
     if (do_alerts) {
-      alert('Set airtable attribute "' + key + '" to be "' + newValue + '"');
+      alert('Set systemlink attribute "' + key + '" to be "' + newValue + '"');
     }
 }
 
@@ -146,7 +142,7 @@ function search_and_replace(string_in, vals_in) {
       // get the field, look up the name in airtable, and replace it
       var name_val = matches[match].substring(9);
       name_val = name_val.substring(0,name_val.length-1);
-      string_out = string_out.replace(matches[match], my_airtable.getValue(name_val));
+      string_out = string_out.replace(matches[match], my_systemlink.getValue(name_val));
     }
   }
   return string_out;
@@ -187,11 +183,11 @@ function init_spike_error(error_type) {
 	alert("You must activate the SPIKE Service first (" + error_type + ").");
 }
 
-function reset_airtable(vals) {
+function reset_systemlink(vals) {
 	// if a reset val has been provided:
 	if (vals["reset_val"] != null) {
     // update airtable
-		updateOnAirtable(vals["name_val"], vals["reset_val"]);
+		updateOnSystemlink(vals["name_val"], vals["reset_val"]);
 	}
 }
 
@@ -218,14 +214,14 @@ function do_action(vals) {
 		// slot number is stored in variable action_val
 		if (my_SPIKE.isActive()) {
 			my_SPIKE.executeProgram(parseInt(vals["action_val"]));
-			reset_airtable(vals); // after executing, check if need to reset
+			reset_systemlink(vals); // after executing, check if need to reset
 		} else {
 			init_spike_error(vals["action_type"]);
 		}
 	} else if (vals["action_type"] == "stop-slot") {
 		if (my_SPIKE.isActive()) {
 			my_SPIKE.stopCurrentProgram();
-			reset_airtable(vals); // after executing, check if need to reset
+			reset_systemlink(vals); // after executing, check if need to reset
 		} else {
 			init_spike_error(vals["action_type"]);
 		}
@@ -242,11 +238,11 @@ function do_action(vals) {
 					my_SPIKE.executeProgram(parseInt(vals["action_val"]));
 				}
 			);
-			reset_airtable(vals); // after executing, check if need to reset
+			reset_systemlink(vals); // after executing, check if need to reset
 		}
   } else if (vals["action_type"] == "run-js") {
     run_js_code(vals);
-    reset_airtable(vals); // after executing, check if need to reset
+    reset_systemlink(vals); // after executing, check if need to reset
 	} else {
 		alert("Trying to do unknown action: " + vals["action_type"] + " (" + vals["action_val"] + ")");
 	}
@@ -262,91 +258,91 @@ function set_attribute(div_in, selector, attr, new_value) {
 // MAIN CHECK FUNCTION
 // - compares previous value to current value, looking for change
 // - calls "do_action" if an action should happen!
-function airtable_check() {
+function systemlink_check() {
 	for (i=0; i<check_array.length; i++) {
 		div = check_array[i];
 		vals = get_div_vals(div);
 
 		// look up the current value stored in Airtable
-		airtable_val = my_airtable.getValue(vals["name_val"]);
+		systemlink_val = my_systemlink.getTagValue(vals["name_val"]);
 
 		if (vals["compare_type"] == "changes") {
 
 			// if new value
-			if (!(vals["prev_val"] == airtable_val)) {
+			if (!(vals["prev_val"] == systemlink_val)) {
 				// then it's a match!
 				set_attribute(div, "table", "class", "airtable_active");
 				do_action(vals);
 			} else { set_attribute(div, "table", "class", "airtable_inactive"); }
 
 			// update prev value to match what's in airtable (because looking for change next time around)
-			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+			set_attribute(div, "input[id=prev_val]", "value", systemlink_val);
 
 		} else if (vals["compare_type"] == "equal") {
 
 			// if new value and it matches the expected value
-			if (!(vals["prev_val"] == airtable_val) && airtable_val == vals["value_val"]) {
+			if (!(vals["prev_val"] == systemlink_val) && systemlink_val == vals["value_val"]) {
 				// then it's a match!
-				set_attribute(div, "table", "class", "airtable_active");
+				set_attribute(div, "table", "class", "systemlink_active");
 				do_action(vals);
-			} else { set_attribute(div, "table", "class", "airtable_inactive"); }
+			} else { set_attribute(div, "table", "class", "systemlink_inactive"); }
 
 			// update prev value to match what's in airtable (because looking for change next time around)
-			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+			set_attribute(div, "input[id=prev_val]", "value", systemlink_val);
 
     } else if (vals["compare_type"] == "not-equal") {
 
 			// if new value and it matches the expected value
-			if (!(vals["prev_val"] == airtable_val) && airtable_val != vals["value_val"]) {
+			if (!(vals["prev_val"] == systemlink_val) && systemlink_val != vals["value_val"]) {
 				// then it's a match!
 				set_attribute(div, "table", "class", "airtable_active");
 				do_action(vals);
 			} else { set_attribute(div, "table", "class", "airtable_inactive"); }
 
 			// update prev value to match what's in airtable (because looking for change next time around)
-			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+			set_attribute(div, "input[id=prev_val]", "value", systemlink_val);
 
 		} else if (vals["compare_type"] == "less-than") {
 
 			// if new value and it matches the expected value
-			if (!(vals["prev_val"] == airtable_val) && parseInt(airtable_val) < parseInt(vals["value_val"])) {
+			if (!(vals["prev_val"] == systemlink_val) && parseInt(systemlink_val) < parseInt(vals["value_val"])) {
 				// then it's a match!
 				set_attribute(div, "table", "class", "airtable_active");
 				do_action(vals);
 			} else { set_attribute(div, "table", "class", "airtable_inactive"); }
 
 			// update prev value to match what's in airtable (because looking for change next time around)
-			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+			set_attribute(div, "input[id=prev_val]", "value", systemlink_val);
 
 		} else if (vals["compare_type"] == "greater-than") {
 
 			// if new value and it matches the expected value
-			if (!(vals["prev_val"] == airtable_val) && parseInt(airtable_val) > parseInt(vals["value_val"])) {
+			if (!(vals["prev_val"] == systemlink_val) && parseInt(systemlink_val) > parseInt(vals["value_val"])) {
 				// then it's a match!
 				set_attribute(div, "table", "class", "airtable_active");
 				do_action(vals);
 			} else { set_attribute(div, "table", "class", "airtable_inactive"); }
 
 			// update prev value to match what's in airtable (because looking for change next time around)
-			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+			set_attribute(div, "input[id=prev_val]", "value", systemlink_val);
 
     } else if (vals["compare_type"] == "longer-than") {
 
 			// if new value and it matches the expected value
-			if (!(vals["prev_val"] == airtable_val) && airtable_val.toString().length > parseInt(vals["value_val"])) {
+			if (!(vals["prev_val"] == systemlink_val) && systemlink_val.toString().length > parseInt(vals["value_val"])) {
 				// then it's a match!
 				set_attribute(div, "table", "class", "airtable_active");
 				do_action(vals);
 			} else { set_attribute(div, "table", "class", "airtable_inactive"); }
 
 			// update prev value to match what's in airtable (because looking for change next time around)
-			set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+			set_attribute(div, "input[id=prev_val]", "value", systemlink_val);
 
 		} else {
 			alert("unknown compare type (" + vals["compare_type"] + ") in div #" + i + "; please check");
 		}
 	}
-	setTimeout(airtable_check,timeout_timer_val);
+	setTimeout(systemlink_check,timeout_timer_val);
 }
 
 // by-passes the value check and just executes the action
@@ -368,18 +364,18 @@ function init_prev_val() {
 		div = check_array[i];
 		vals = get_div_vals(div);
 		// look up the current value stored in Airtable
-		airtable_val = my_airtable.getValue(vals["name_val"]);
+		systemlink_val = my_systemlink.getTagValue(vals["name_val"]);
 		// update prev value to match what's in airtable (because looking for change next time around)
-		set_attribute(div, "input[id=prev_val]", "value", airtable_val);
+		set_attribute(div, "input[id=prev_val]", "value", systemlink_val);
 	}
 	// now start checking
-	setTimeout(airtable_check,timeout_timer_val);
+	setTimeout(systemlink_check,timeout_timer_val);
 }
 
 // this is a setup function for local pages
 // - takes default HTML elements and creates tables with textboxes/etc
 function setup_local() {
-	d = document.querySelectorAll("div[type=airtable-check]");
+	d = document.querySelectorAll("div[type=systemlink-check]");
 	for (i=0; i<d.length; i++) {
 		div = d[i];
 		vals = get_div_vals(div);
@@ -462,15 +458,13 @@ window.addEventListener('load', function () {
     }
 
     // setup the ServiceDock
-    airtableElement = document.getElementById("service_airtable");
-    var secret1 = header1 + footer1;
-    var secret2 = header2 + footer2;
-    var secret3 = header3 + footer3;
-    airtableElement.setAttribute("apikey", secret1);
-    airtableElement.setAttribute("baseid", secret2);
-    airtableElement.setAttribute("tablename", secret3);
-    airtableElement.init();
-    my_airtable = airtableElement.getService();
+    // SET UP SYSTEMLINK
+    systemlinkElement = document.getElementById("service_systemlink");
+    var secret = header1 + "-" + footer1;
+    systemlinkElement.setAttribute("apikey", secret);
+    systemlinkElement.init();
+    my_systemlink = systemlinkElement.getService();
+    // SET UP SPIKE PRIME
     if (page_type == "local") {
 	    // SPIKE service
 	    my_SPIKE = document.getElementById("service_spike").getService();

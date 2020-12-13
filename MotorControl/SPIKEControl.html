@@ -1,0 +1,102 @@
+<html>
+	<title>Project: Motor Control Challenge (Local)</title>
+	<head>
+		<script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+	  <script src="../src/secret.js" charset="utf-8"></script>
+	  <script src="../src/cloud.js" charset="utf-8"></script>
+	  <link rel="stylesheet" href="../src/style.css" />
+		<script>
+			// function to run when page loads (before ServiceDock/etc has been set up)
+			function onload_pre() {
+				monitor_cloud_frequency = 500; // monitor faster than default
+			}
+			// function to change the motor speed
+			function change_motorspeed(name, value) {
+				var new_speed = parseInt(value);
+				var motor_port = document.getElementById('motor_port').value;
+				if (new_speed != NaN) {
+					mySPIKE.Motor(motor_port).start(new_speed);
+				}
+			}
+		</script>
+	</head>
+<body>
+
+	<!-- SERVICE DOCK -->
+	<div id="servicedock">
+		<service-systemlink id="service_systemlink"></service-systemlink>
+		<service-spike id="service_spike"></service-spike>
+	</div>
+
+	<h1>Project: Motor Control Challenge</h1>
+
+  <p>Change the motor speed to try and stop the pointer straight up!</p>
+
+	<p>
+		<ul><li>
+			<a href="https://docs.google.com/presentation/d/1mJocURYhKTREILhA1RT9PZfyO_GbQvhapKy_znGw2YA/edit?usp=sharing" target=_blank>Robot Build Instructions</a>
+		</li></ul>
+	</p>
+
+	<div class="cloud_check">
+		<p>
+	    <b>To use the SPIKE™ Prime hardware,</b> you must enable the WebSerial API in your browser. To do so, please make sure:
+	    <ul>
+	        <li>You are using the Google Chrome browser.</li>
+	        <li>The following chrome flags are enabled on <b>chrome://flags</b>.</li>
+	        <ul>
+	          <li>Mac OSX user? <em>#enable-experimental-web-platform-features</em></li>
+	          <li>Windows user? <em>#enable-experimental-web-platform-features</em> <b>AND</b> <em>#new-usb-backend</em></li>
+	        </ul>
+	    </ul>
+
+	    <b>To enable these flags:</b>
+	    <ol>
+	        <li>In your Browser URL, visit <b>chrome://flags</b></li>
+	        <li>Set the your required flags to "Enabled" via dropdown</li>
+	        <li>Relaunch the browser to have changes take effect</li>
+	        <li>Revisit this page and activate the SPIKE™ Prime Service Dock (top right)</li>
+	    </ol>
+	  </p>
+	</div>
+
+  <h2>SPIKE Control Interface</h2>
+
+	<p>Pick your Motor Port:
+		<select name="motor_port" id="motor_port">
+			<option value="A" selected>A</option>
+			<option value="B">B</option>
+			<option value="C">C</option>
+			<option value="D">D</option>
+			<option value="E">E</option>
+			<option value="F">F</option>
+		</select>
+	</p>
+
+	<div class="cloud_check">
+		<b><em>Monitor Cloud:</em></b>
+
+	  <div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="motor01">
+      <input type=text id="cloud_action_val" value="change_motorspeed">
+    </div>
+
+	</div>
+
+	<!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+</body>
+</html>

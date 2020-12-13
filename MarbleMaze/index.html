@@ -1,0 +1,69 @@
+<html>
+  <title>Project: Marble Maze (Remote)</title>
+  <head>
+    <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+    <script src="../src/secret.js" charset="utf-8"></script>
+    <script src="../src/cloud.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../src/style.css" />
+    <style>
+      .maze_controls {
+        border: 1px solid black;
+      }
+      table.maze_controls td {
+        text-align: center;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+<body>
+
+  <!-- SERVICE DOCK -->
+  <div id="servicedock">
+    <service-systemlink id="service_systemlink"></service-systemlink>
+  </div>
+
+  <h1>Project: Marble Maze</h1>
+
+  <p>Control the maze to navigate the marble to the finish.</p>
+
+  <h2>Remote Interface</h2>
+
+  <table class="maze_controls"><tr>
+    <th colspan=3><button cloud_action='update' cloud_name='marble_maze' style='width: 100px; height: 50px;'>Reset</button></th>
+  </tr><tr>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='FL'><img src='./dir_FL.png'></button></td>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='F'><img src='./dir_F.png'></button></td>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='FR'><img src='./dir_FR.png'></button></td>
+  </tr><tr>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='L'><img src='./dir_L.png'></button></td>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='Level'><img src='./dir_Level.png'></button></td>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='R'><img src='./dir_R.png'></button></td>
+  </tr><tr>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='BL'><img src='./dir_BL.png'></button></td>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='B'><img src='./dir_B.png'></button></td>
+    <td><button cloud_action='update' cloud_name='marble_maze' cloud_value='BR'><img src='./dir_BR.png'></button></td>
+  </tr></table>
+
+  <hr />
+
+  <p>Do you have a SPIKE Prime (and the marble maze)?
+    <a href="./SPIKEControl.html" target=_blank>Here is the SPIKE Prime Control page.</a>
+  </p>
+
+  <!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+</body>
+</html>

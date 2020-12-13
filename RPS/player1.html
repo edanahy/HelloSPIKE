@@ -1,0 +1,253 @@
+<html>
+  <head>
+    <title>Project: Two-Player Rock-Paper-Scissors (Player 1)</title>
+    <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+    <script src="../src/secret.js" charset="utf-8"></script>
+    <script src="../src/cloud.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../src/style.css" />
+    <script>
+      // when page loads, set up the page
+      function onload_pre () {
+        page_setup();
+      }
+      // Set Up Page: clear variables, hide DIVs, etc
+      function page_setup() {
+        document.getElementById("play").style.display = "none"; // hide div
+        document.getElementById("pick").style.display = "none"; // hide div
+        document.getElementById("show").style.display = "none"; // hide div
+        document.getElementById("result").style.display = "none"; // hide div
+        document.getElementById("result_show").innerHTML = ""; // clear result
+        clear_table_classes();
+      }
+      // clear any current table styling
+      function clear_table_classes () {
+        document.getElementById("rock").classList.remove("highlight");
+        document.getElementById("rock").classList.remove("select");
+        document.getElementById("paper").classList.remove("highlight");
+        document.getElementById("paper").classList.remove("select");
+        document.getElementById("scissors").classList.remove("highlight");
+        document.getElementById("scissors").classList.remove("select");
+      }
+      function onload_post () {
+        if (cloud_connection.isActive()) {
+          // reset cloud values to blank
+          cloud_update("RPS_p1", "");
+          cloud_update("RPS_p2", "");
+          document.getElementById("play").style.display = "inline"; // show play button
+        } else {
+          setTimeout(onload_post,100); // recall until cloud connection is active
+        }
+      }
+      // function that starts the game
+      function start_game(name, value) {
+        page_setup(); // clear previous settings on the page...
+        document.getElementById("play").style.display = "inline"; // show play button
+        document.getElementById("pick").style.display = "inline"; // show pick option table
+        cloud_update("RPS_p1", "");
+        cloud_update("RPS_p2", "");
+        if (mySPIKE.isActive()) {
+          mySPIKE.PrimeHub().light_matrix.write("?");
+        }
+        monitor_motor();
+      }
+      function eval_motor_position (position_in) {
+        var block_size = 180;
+        position_in = Math.abs(position_in) % block_size; // mod by 360
+        if (position_in < (block_size/3)) {
+          return "rock";
+        } else if (position_in < (block_size/3)*2) {
+          return "paper";
+        } else {
+          return "scissors";
+        }
+      }
+      var current_choice = "rock";
+      function monitor_motor() {
+        if (mySPIKE.isActive()) {
+          clear_table_classes();
+          // get current motor position and figure out choice
+          current_choice = eval_motor_position(mySPIKE.Motor('A').get_position());
+          if (mySPIKE.ForceSensor('B').is_pressed()) {
+            // they have selected their choice and it's time to move on
+            document.getElementById(current_choice).classList.add("select");
+            cloud_update("RPS_p1", current_choice);
+          } else {
+            // update table with current selection
+            document.getElementById(current_choice).classList.add("highlight");
+            setTimeout(monitor_motor, 50);
+          }
+        } else { alert("You must activate SPIKE Prime first."); }
+      }
+      function game_throw (name, value) {
+        console.log("Player 1: " + value + " HAS BEEN THROWN!")
+        document.getElementById("show").style.display = "inline"; // show div
+        monitor_throw();
+      }
+      function monitor_throw() {
+        var opponent_throw = cloud_get("RPS_p2");
+        if (opponent_throw == "rock" || opponent_throw == "paper" || opponent_throw == "scissors") {
+          show_result(opponent_throw);
+        } else {
+          // keep monitoring, waiting for them to throw:
+          setTimeout(monitor_throw,250);
+        }
+      }
+      function show_result(opponent_throw) {
+        var my_throw = cloud_get("RPS_p1");
+        document.getElementById("result").style.display = "inline"; // show div
+        count_down(3, my_throw, opponent_throw);
+      }
+      function count_down(num, my_throw, opponent_throw) {
+        if (num > 0) {
+          mySPIKE.PrimeHub().light_matrix.write(num.toString());
+          setTimeout(function() { count_down(num-1, my_throw, opponent_throw); }, 1000);
+        } else {
+          mySPIKE.PrimeHub().light_matrix.write(my_throw);
+          setTimeout(function() {
+            var result = "TIE";
+            if (my_throw == "rock" && opponent_throw == "paper") { result = "LOSE"; }
+            else if (my_throw == "rock" && opponent_throw == "scissors") { result = "WIN"; }
+            else if (my_throw == "paper" && opponent_throw == "rock") { result = "WIN"; }
+            else if (my_throw == "paper" && opponent_throw == "scissors") { result = "LOSE"; }
+            else if (my_throw == "scissors" && opponent_throw == "rock") { result = "LOSE"; }
+            else if (my_throw == "scissors" && opponent_throw == "paper") { result = "WIN"; }
+            document.getElementById("result_show").innerHTML = my_throw + " vs. " + opponent_throw + " ... YOU " + result;
+          }, 2000);
+        }
+      }
+    </script>
+    <style>
+      .option_table {
+        border: 1px black solid;
+        padding: 10px;
+      }
+      .option_table td {
+        padding: 30px;
+        border: 1px black solid;
+        vertical-align: middle;
+        align-items: center;
+        font-size: x-large;
+      }
+      .highlight {
+        background-color: lightgray;
+      }
+      .select {
+        background-color: lightgreen;
+      }
+    </style>
+  </head>
+<body>
+
+  <!-- SERVICE DOCK -->
+  <div id="servicedock">
+    <service-systemlink id="service_systemlink"></service-systemlink>
+    <service-spike id="service_spike"></service-spike>
+  </div>
+
+  <h1>Project: Two-Player Rock-Paper-Scissors</h1>
+
+  <p>This project pits two remote players against each other,
+    each using a SPIKE Prime to play Rock-Paper Scissors</p>
+
+  <p><ul><li><a href="./player2.html" target=_blank>Link to Player 2 interface</a></li></ul></p>
+
+  <h2>Player 1 Interface</h2>
+
+  <div class="cloud_check">
+    <p>
+      <b>To use the SPIKE™ Prime hardware,</b> you must enable the WebSerial API in your browser. To do so, please make sure:
+      <ul>
+          <li>You are using the Google Chrome browser.</li>
+          <li>The following chrome flags are enabled on <b>chrome://flags</b>.</li>
+          <ul>
+            <li>Mac OSX user? <em>#enable-experimental-web-platform-features</em></li>
+            <li>Windows user? <em>#enable-experimental-web-platform-features</em> <b>AND</b> <em>#new-usb-backend</em></li>
+          </ul>
+      </ul>
+
+      <b>To enable these flags:</b>
+      <ol>
+          <li>In your Browser URL, visit <b>chrome://flags</b></li>
+          <li>Set the your required flags to "Enabled" via dropdown</li>
+          <li>Relaunch the browser to have changes take effect</li>
+          <li>Revisit this page and activate the SPIKE™ Prime Service Dock (top right)</li>
+      </ol>
+    </p>
+  </div>
+
+  <p style="color:red;">Remember to activate your SPIKE Prime. (And: Motor on Port A, Force Sensor on Port B)</p>
+
+  <p id="play"><button cloud_action='update' cloud_name='RPS_p1'>Play Game</button></p>
+
+  <div id="pick">
+
+    <h3>Pick Your Throw:</h3>
+
+    <p>Use <b>Motor (Port A) to select</b> and use <b>Force Sensor (Port B)</b> to confirm.</p>
+
+    <table class="option_table"><tr>
+      <td id="rock">Rock</td><td id="paper">Paper</td><td id="scissors">Scissors</td>
+    </tr></table>
+
+  </div>
+
+  <div id="show">
+
+    <p>Show your SPIKE Prime to your opponent, and wait for them to also throw.</p>
+
+  </div>
+
+  <div id="result">
+
+    <h3>And the result is...</h3>
+
+    <p style="color: red"><b id="result_show"></b></p>
+
+  </div>
+
+  <div class="cloud_check" style="display:none">
+    <b><em>Monitor Cloud:</em></b>
+
+    <div type="cloud_check" cloud_compare="equal" cloud_action="run_js">
+      <input type=text id="cloud_name" value="RPS_p1">
+      <input type=text id="cloud_value" value="Play Game">
+      <input type=text id="cloud_action_val" value="start_game">
+    </div>
+
+    <div type="cloud_check" cloud_compare="equal" cloud_action="run_js">
+      <input type=text id="cloud_name" value="RPS_p1">
+      <input type=text id="cloud_value" value="rock">
+      <input type=text id="cloud_action_val" value="game_throw">
+    </div>
+
+    <div type="cloud_check" cloud_compare="equal" cloud_action="run_js">
+      <input type=text id="cloud_name" value="RPS_p1">
+      <input type=text id="cloud_value" value="paper">
+      <input type=text id="cloud_action_val" value="game_throw">
+    </div>
+
+    <div type="cloud_check" cloud_compare="equal" cloud_action="run_js">
+      <input type=text id="cloud_name" value="RPS_p1">
+      <input type=text id="cloud_value" value="scissors">
+      <input type=text id="cloud_action_val" value="game_throw">
+    </div>
+
+  </div>
+
+  <!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+</body>
+</html>

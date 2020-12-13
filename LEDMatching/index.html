@@ -1,0 +1,196 @@
+<html>
+  <title>Project: LED Matching Challenge (Remote)</title>
+  <head>
+    <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+    <script src="../src/secret.js" charset="utf-8"></script>
+    <script src="../src/cloud.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../src/style.css" />
+    <script>
+      // these are the different images and their encoded display values
+      var challenges = {
+        "BUTTERFLY": "99099:99999:00900:99999:99099",
+        "DUCK": "09900:99900:09999:09990:00000",
+        "GHOST": "99999:90909:99999:99999:90909",
+        "GIRAFFE": "99000:09000:09000:09990:09090",
+        "HAPPY": "00000:09090:00000:90009:09990",
+        "HEART": "09090:99999:99999:09990:00900",
+        "HOUSE": "00900:09990:99999:09990:09090",
+        "SAD": "00000:09090:00000:09990:90009",
+        "SKULL": "09990:90909:99999:09990:09990",
+        "SNAKE": "99000:99099:09090:09990:00000",
+        "TORTOISE": "00000:09990:99999:09090:00000",
+        "UMBRELLA": "09990:99999:00900:90900:09900"
+      };
+      // load an image into the "challenge_sequence" table
+      function load_challenge() {
+        var challenge_name = document.getElementById("challenge_sequence").value;
+        var sequence = challenges[challenge_name.toString()].split(":");
+        for (var row = 0; row < 5; row++) {
+          for (var col = 0; col < 5; col++) {
+            var square = document.getElementById("square" + row.toString() + col.toString());
+            if (parseInt(sequence[row].charAt(col)) > 0) {
+              square.setAttribute("class","square_on");
+            } else {
+              square.setAttribute("class","square_off");
+            }
+          }
+        }
+      }
+      // randomize the challenge (pick a random one)
+      function random_challenge() {
+        // get the keys first:
+        var keys = Object.keys(challenges);
+        var random_index = Math.floor(Math.random() * Math.floor(keys.length))
+        document.getElementById("challenge_sequence").value = keys[random_index];
+        load_challenge(); // now that it's been selected, load it
+      }
+    </script>
+    <style>
+      /* LOCAL STYLING OF THE TABLE */
+      table.buttons {
+        padding: 10px;
+        border: 1px solid black;
+        background-color: yellow;
+      }
+      table.buttons td {
+        padding:10px;
+      }
+      table.buttons button {
+        width: 70px;
+        height: 70px;
+      }
+      table.challenge {
+        padding: 10px;
+        border: 1px solid black;
+        background-color: yellow;
+      }
+      table.challenge td{
+        padding: 10px;
+      }
+      .square_on {
+        width: 70px;
+        height: 70px;
+        background-color: white;
+      }
+      .square_off {
+        width: 70px;
+        height: 70px;
+        background-color: rgba(255, 170, 29, 0.1);
+      }
+    </style>
+  </head>
+<body>
+
+  <!-- SERVICE DOCK -->
+  <div id="servicedock">
+    <service-systemlink id="service_systemlink"></service-systemlink>
+  </div>
+
+  <h1>Project: LED Matching Challenge</h1>
+
+  <p>Toggle the SPIKE Prime LEDs to try and match the pattern!</p>
+
+  <h2>Remote Interface</h2>
+
+  <table>
+  <tr>
+    <th>Remote LED Control:</th>
+    <th>Challenge Squence: <input type=button onclick="random_challenge();" id="challenge_sequence" value="Click to Load"></input></th>
+  </tr>
+  <tr><td>
+
+    <table class='buttons'>
+      <tr>
+        <td><button cloud_action="toggle" cloud_name='LED00' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED01' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED02' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED03' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED04' cloud_list='0,100'>Toggle</button></td>
+      </tr><tr>
+        <td><button cloud_action="toggle" cloud_name='LED10' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED11' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED12' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED13' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED14' cloud_list='0,100'>Toggle</button></td>
+      </tr><tr>
+        <td><button cloud_action="toggle" cloud_name='LED20' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED21' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED22' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED23' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED24' cloud_list='0,100'>Toggle</button></td>
+      </tr><tr>
+        <td><button cloud_action="toggle" cloud_name='LED30' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED31' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED32' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED33' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED34' cloud_list='0,100'>Toggle</button></td>
+      </tr><tr>
+        <td><button cloud_action="toggle" cloud_name='LED40' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED41' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED42' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED43' cloud_list='0,100'>Toggle</button></td>
+        <td><button cloud_action="toggle" cloud_name='LED44' cloud_list='0,100'>Toggle</button></td>
+      </tr>
+    </table>
+
+  </td><td>
+
+    <table class="challenge">
+      <tr>
+        <td><div id="square00" class="square_off"></div></td>
+        <td><div id="square01" class="square_off"></div></td>
+        <td><div id="square02" class="square_off"></div></td>
+        <td><div id="square03" class="square_off"></div></td>
+        <td><div id="square04" class="square_off"></div></td>
+      </tr><tr>
+        <td><div id="square10" class="square_off"></div></td>
+        <td><div id="square11" class="square_off"></div></td>
+        <td><div id="square12" class="square_off"></div></td>
+        <td><div id="square13" class="square_off"></div></td>
+        <td><div id="square14" class="square_off"></div></td>
+      </tr><tr>
+        <td><div id="square20" class="square_off"></div></td>
+        <td><div id="square21" class="square_off"></div></td>
+        <td><div id="square22" class="square_off"></div></td>
+        <td><div id="square23" class="square_off"></div></td>
+        <td><div id="square24" class="square_off"></div></td>
+      </tr><tr>
+        <td><div id="square30" class="square_off"></div></td>
+        <td><div id="square31" class="square_off"></div></td>
+        <td><div id="square32" class="square_off"></div></td>
+        <td><div id="square33" class="square_off"></div></td>
+        <td><div id="square34" class="square_off"></div></td>
+      </tr><tr>
+        <td><div id="square40" class="square_off"></div></td>
+        <td><div id="square41" class="square_off"></div></td>
+        <td><div id="square42" class="square_off"></div></td>
+        <td><div id="square43" class="square_off"></div></td>
+        <td><div id="square44" class="square_off"></div></td>
+      </tr>
+    </table>
+
+  </tr></table>
+
+  <hr />
+
+  <p>Do you have a SPIKE Prime?
+    <a href="./SPIKEControl.html" target=_blank>Here is the SPIKE Prime Control page.</a>
+  </p>
+
+  <!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+</body>
+</html>
