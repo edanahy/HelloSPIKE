@@ -1,6 +1,4 @@
 <html><head>
-  <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
-  <script src="airtable_script.js" charset="utf-8"></script>
   <link rel="stylesheet" href="style.css" />
   <style>
     td {
@@ -9,49 +7,90 @@
     }
   </style>
 </head>
-<body type="remote">
-
-  <!-- AIRTABLE SERVICE DOCK -->
-  <div id="servicedock" style="float:right;">
-    <service-airtable id="service_airtable" apikey = "" baseid = "" tablename = ""></service-airtable>
-  </div>
+<body>
 
   <!-- WELCOME -->
-  <p>
+  <p><table>
+    <tr><td style="text-align: center; vertical-align: middle;">
+      <img src="./img/HelloSPIKE.png" width="100px" height="100px">
+    </td><td style="text-align: center; vertical-align: middle;">
     <h1>Hello SPIKE</h1>
-    <br />
-    <img src="logo.png" width="100px" height="100px">
+  </table></p>
+
+  <p>A collection of experimental web-controlled SPIKE Prime projects.</p>
+
+  <h3>Project: Display Text</h3>
+
+  <blockquote>
+
+    <p><a href="./DisplayText/index.html" target=_blank>DisplayText</a></p>
+
+    <p><a href="./DisplayText/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+
+  </blockquote>
+
+  <h3>Project: Motor Control Challenge</h3>
+
+  <blockquote>
+
+    <p><a href="./MotorControl/index.html" target=_blank>Motor Control Challenge</a></p>
+
+    <p><a href="./MotorControl/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+
+  </blockquote>
+
+  <h3>Project: LED Matching Challenge</h3>
+
+  <blockquote>
+
+    <p><a href="./LEDMatching/index.html" target=_blank>LED Matching Challenge</a></p>
+
+    <p><a href="./LEDMatching/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+
+  </blockquote>
+
+  <h3>Project: Marble Maze</h3>
+
+  <blockquote>
+
+    <p><a href="./MarbleMaze/index.html" target=_blank>Marble Maze</a></p>
+
+    <p><a href="./MarbleMaze/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+
+  </blockquote>
+
+  <h3>Project: Two-Player Rock-Paper-Scissors</h3>
+
+  <blockquote>
+
+    <p>Note: this requires two SPIKE Primes</p>
+
+    <p><a href="./RPS/player1.html" target=_blank>Player 1 Interface</a></p>
+
+    <p><a href="./RPS/player2.html" target=_blank>Player 2 Interface</a></p>
+
+  </blockquote>
+
+  <h3><em>Coming Soon:</em> Draw My Face</h3>
+
+  <blockquote>
+
+    <p>A work in progress... Stay tuned!</p>
+
+  </blockquote>
+
+  <!-- footer -->
+  <hr />
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="./img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
   </p>
 
-  <!-- EMBED THE LIVE VIDEO -->
-  <p><a href="http://130.64.143.167:81/video_feed" target="_blank">View Video Feed</a></p>
-
-  <!-- CONTROL THE ROBOT -->
-  <table><tr>
-    <td>
-
-      <h2>Display Text on the Robot</h2>
-      <p>
-        <form type='textinput'>
-            <input type='text' airtable_value='text_input'>
-            <input type='button' value='Show Text'>
-        </form>
-      </p>
-
-    </td><td>
-
-
-      <h2>Move the Robot</h2>
-      <p>
-        <button airtable_value='action'>Spin Left</button>
-        <button airtable_value='action'>Spin Right</button>
-        <button airtable_value='action'>Stop</button>
-      </p>
-
-    </td>
-  </tr></table>
-
-  <p style="font-size: x-small"><a href="HelloSPIKE.html">Robot Code</a>, Example 2: <a href="MotorControl">Motor Control</a></p>
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
 
 </body>
 </html>

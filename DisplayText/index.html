@@ -1,0 +1,50 @@
+<html>
+  <title>Project: Display Text (Remote)</title>
+  <head>
+    <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+    <script src="../src/secret.js" charset="utf-8"></script>
+    <script src="../src/cloud.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../src/style.css" />
+  </head>
+<body>
+
+  <!-- SERVICE DOCK -->
+  <div id="servicedock">
+    <service-systemlink id="service_systemlink"></service-systemlink>
+  </div>
+
+    <h1>Project: Display Text</h1>
+
+    <p>A simple demonstration of web-based remote control of the SPIKE Prime.</p>
+
+    <h2>Remote Interface</h2>
+
+    <p><form cloud_form='input'>
+      Enter text you want to display:
+      <input type=text cloud_action='update' cloud_name='display_text' value=''>
+      <input type=submit value='Display!'>
+    </form></p>
+
+  <hr />
+
+  <p>Do you have a SPIKE Prime?
+    <a href="./SPIKEControl.html" target=_blank>Here is the SPIKE Prime Control page.</a>
+  </p>
+
+  <!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+</body>
+</html>

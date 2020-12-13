@@ -1,0 +1,161 @@
+<html><head>
+  <title>LED Challenge</title>
+  <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+  <script src="systemlink_script.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="challenges.js" charset="utf-8"></script>
+  <script language="JavaScript">
+    function load_challenge() {
+      var challenge_name = document.getElementById("challenge_sequence").value;
+      var sequence = challenges[challenge_name.toString()].split(":");
+      for (var row = 0; row < 5; row++) {
+        for (var col = 0; col < 5; col++) {
+          var square = document.getElementById("square" + row.toString() + col.toString());
+          if (parseInt(sequence[row].charAt(col)) > 0) {
+            square.setAttribute("class","square_on");
+          } else {
+            square.setAttribute("class","square_off");
+          }
+        }
+      }
+    }
+    function random_challenge() {
+      // get the keys first:
+      var keys = Object.keys(challenges);
+      var random_index = Math.floor(Math.random() * Math.floor(keys.length))
+      document.getElementById("challenge_sequence").value = keys[random_index];
+      load_challenge();
+    }
+  </script>
+  <style>
+    table.buttons {
+      padding: 10px;
+      border: 1px solid black;
+      background-color: yellow;
+    }
+    table.buttons td {
+      padding:10px;
+    }
+    table.buttons button {
+      width: 70px;
+      height: 70px;
+    }
+    table.challenge {
+      padding: 10px;
+      border: 1px solid black;
+      background-color: yellow;
+    }
+    table.challenge td{
+      padding: 10px;
+    }
+    .square_on {
+      width: 70px;
+      height: 70px;
+      background-color: white;
+    }
+    .square_off {
+      width: 70px;
+      height: 70px;
+      background-color: rgba(255, 170, 29, 0.1);
+    }
+  </style>
+</head>
+<body type="remote">
+
+    <!-- AIRTABLE SERVICE DOCK -->
+    <div id="servicedock" style="float:right;">
+      <service-systemlink id="service_systemlink" apikey=""></service-systemlink>
+    </div>
+
+    <!-- WELCOME -->
+    <h1>LED Challenge</h1>
+
+    <table>
+    <tr><th>LED Control:</th><th>Challenge Squence: <input type=button onclick="random_challenge();" id="challenge_sequence" value="GIRAFFE"></input></th></tr>
+    <tr><td>
+
+      <table class='buttons'>
+        <tr>
+          <td><button systemlink_value='LED00' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED01' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED02' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED03' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED04' systemlink_action="toggle">Toggle</button></td>
+        </tr><tr>
+          <td><button systemlink_value='LED10' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED11' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED12' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED13' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED14' systemlink_action="toggle">Toggle</button></td>
+        </tr><tr>
+          <td><button systemlink_value='LED20' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED21' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED22' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED23' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED24' systemlink_action="toggle">Toggle</button></td>
+        </tr><tr>
+          <td><button systemlink_value='LED30' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED31' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED32' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED33' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED34' systemlink_action="toggle">Toggle</button></td>
+        </tr><tr>
+          <td><button systemlink_value='LED40' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED41' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED42' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED43' systemlink_action="toggle">Toggle</button></td>
+          <td><button systemlink_value='LED44' systemlink_action="toggle">Toggle</button></td>
+        </tr>
+      </table>
+
+    </td><td>
+
+      <table class="challenge" onload="load_challenge();">
+        <tr>
+          <td><div id="square00" class="square_on"></div></td>
+          <td><div id="square01" class="square_on"></div></td>
+          <td><div id="square02" class="square_on"></div></td>
+          <td><div id="square03" class="square_on"></div></td>
+          <td><div id="square04" class="square_on"></div></td>
+        </tr><tr>
+          <td><div id="square10" class="square_on"></div></td>
+          <td><div id="square11" class="square_on"></div></td>
+          <td><div id="square12" class="square_on"></div></td>
+          <td><div id="square13" class="square_on"></div></td>
+          <td><div id="square14" class="square_on"></div></td>
+        </tr><tr>
+          <td><div id="square20" class="square_on"></div></td>
+          <td><div id="square21" class="square_on"></div></td>
+          <td><div id="square22" class="square_on"></div></td>
+          <td><div id="square23" class="square_on"></div></td>
+          <td><div id="square24" class="square_on"></div></td>
+        </tr><tr>
+          <td><div id="square30" class="square_on"></div></td>
+          <td><div id="square31" class="square_on"></div></td>
+          <td><div id="square32" class="square_off"></div></td>
+          <td><div id="square33" class="square_off"></div></td>
+          <td><div id="square34" class="square_off"></div></td>
+        </tr><tr>
+          <td><div id="square40" class="square_on"></div></td>
+          <td><div id="square41" class="square_on"></div></td>
+          <td><div id="square42" class="square_on"></div></td>
+          <td><div id="square43" class="square_on"></div></td>
+          <td><div id="square44" class="square_on"></div></td>
+        </tr>
+      </table>
+
+    </tr></table>
+
+    <p>Experimental demo created by:</p>
+
+    <p>
+      <a href="http://ceeo.tufts.edu" target=_blank><img src="TuftsCEEO.png"></a>
+      <br><br>
+      For more information, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+    </p>
+
+    <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+    <p style="font-size: x-small"><a href="LEDChallengeLocal.html" target=_blank>Robot Code</a></p>
+
+</body></html>

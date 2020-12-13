@@ -1,0 +1,163 @@
+<html>
+	<title>Project: Marble Maze (Local)</title>
+	<head>
+		<script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+	  <script src="../src/secret.js" charset="utf-8"></script>
+	  <script src="../src/cloud.js" charset="utf-8"></script>
+	  <link rel="stylesheet" href="../src/style.css" />
+		<script>
+			// global CONSTS
+			var FRONT = -1; var BACK = 1;
+			var LEFT = -1; var RIGHT = 1;
+			var LEVEL = 0;
+			var FB_Motor = 'A';
+			var LR_Motor = 'B';
+			// SPIKE Prime Motor Details (power and position)
+			var motor_LR_power = 20;
+			var motor_FB_power = 10;
+			// LR motor positions
+			var motor_LR_right = 30;
+			var motor_LR_level = 100;
+			var motor_LR_left = 200;
+			// FB motor positions
+			var motor_FB_front = 160;
+			var motor_FB_level = 180;
+			var motor_FB_back = 200;
+			// function to run when page loads (before ServiceDock/etc has been set up)
+			function onload_pre() {
+				monitor_cloud_frequency = 500; // monitor faster than default
+			}
+			function do_nothing() {
+				// empty function
+			}
+			function set_LR(position, callback) {
+				if (position == LEVEL) {
+					// level LR
+					mySPIKE.Motor(LR_Motor).run_to_position(motor_LR_level, motor_LR_power, callback);
+				} else if (position == LEFT) {
+					// go LEFT
+					mySPIKE.Motor(LR_Motor).run_to_position(motor_LR_left, motor_LR_power, callback);
+				} else if (position == RIGHT) {
+					// go RIGHT
+					mySPIKE.Motor(LR_Motor).run_to_position(motor_LR_right, motor_LR_power, callback);
+				}
+			}
+			function set_FB(position, callback) {
+				if (position == LEVEL) {
+					// level FB
+					mySPIKE.Motor(FB_Motor).run_to_position(motor_FB_level, motor_FB_power, callback);
+				} else if (position == FRONT) {
+					// go FRONT
+					mySPIKE.Motor(FB_Motor).run_to_position(motor_FB_front, motor_FB_power, callback);
+				} else if (position == BACK) {
+					// go BACK
+					mySPIKE.Motor(FB_Motor).run_to_position(motor_FB_back, motor_FB_power, callback);
+				}
+			}
+			// function to change the motor speed
+			function update_maze(name, value) {
+				console.log('UPDATE MAZE: ' + value);
+				// 9 cases to analyze: all directions
+				if (value == 'None') {
+					// ignore
+				} else if (value == 'Reset' || value == 'Level') {
+					// level the maze
+					set_LR(LEVEL, function () { set_FB(LEVEL, do_nothing); } );
+				} else if (value == 'FL') {
+					// front-left
+					set_LR(LEFT, function () { set_FB(FRONT, do_nothing); } );
+				} else if (value == 'F') {
+					// front
+					set_LR(LEVEL, function () { set_FB(FRONT, do_nothing); } );
+				} else if (value == 'FR') {
+					// front-right
+					set_LR(RIGHT, function () { set_FB(FRONT, do_nothing); } );
+				} else if (value == 'L') {
+					// left
+					set_LR(LEFT, function () { set_FB(LEVEL, do_nothing); } );
+				} else if (value == 'R') {
+					// right
+					set_LR(RIGHT, function () { set_FB(LEVEL, do_nothing); } );
+				} else if (value == 'BL') {
+					// back-left
+					set_LR(LEFT, function () { set_FB(BACK, do_nothing); } );
+				} else if (value == 'B') {
+					// back
+					set_LR(LEVEL, function () { set_FB(BACK, do_nothing); } );
+				} else if (value == 'BR') {
+					// back-right
+					set_LR(RIGHT, function () { set_FB(BACK, do_nothing); } );
+				}
+			}
+		</script>
+	</head>
+<body>
+
+	<!-- SERVICE DOCK -->
+	<div id="servicedock">
+		<service-systemlink id="service_systemlink"></service-systemlink>
+		<service-spike id="service_spike"></service-spike>
+	</div>
+
+	<h1>Project: Marble Maze</h1>
+
+  <p>Control the maze to navigate the marble to the finish.</p>
+
+	<div class="cloud_check">
+		<p>
+	    <b>To use the SPIKE™ Prime hardware,</b> you must enable the WebSerial API in your browser. To do so, please make sure:
+	    <ul>
+	        <li>You are using the Google Chrome browser.</li>
+	        <li>The following chrome flags are enabled on <b>chrome://flags</b>.</li>
+	        <ul>
+	          <li>Mac OSX user? <em>#enable-experimental-web-platform-features</em></li>
+	          <li>Windows user? <em>#enable-experimental-web-platform-features</em> <b>AND</b> <em>#new-usb-backend</em></li>
+	        </ul>
+	    </ul>
+
+	    <b>To enable these flags:</b>
+	    <ol>
+	        <li>In your Browser URL, visit <b>chrome://flags</b></li>
+	        <li>Set the your required flags to "Enabled" via dropdown</li>
+	        <li>Relaunch the browser to have changes take effect</li>
+	        <li>Revisit this page and activate the SPIKE™ Prime Service Dock (top right)</li>
+	    </ol>
+	  </p>
+	</div>
+
+  <h2>SPIKE Control Interface</h2>
+
+	<div class="cloud_check">
+		<b><em>Monitor Cloud:</em></b>
+
+	  <div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="marble_maze">
+      <input type=text id="cloud_action_val" value="update_maze">
+    </div>
+
+		<div type="cloud_check" cloud_compare="equal" cloud_action="run_js">
+			<input type=text id="cloud_name" value="marble_maze">
+			<input type=text id="cloud_value" value="Reset">
+      <input type=text id="cloud_action_val" value="">
+			<input type=text id="cloud_reset" value="do_nothing">
+    </div>
+
+	</div>
+
+	<!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+</body>
+</html>

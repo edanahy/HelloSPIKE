@@ -1,0 +1,210 @@
+<html>
+	<title>Project: LED Matching Challenge (Local)</title>
+	<head>
+		<script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+	  <script src="../src/secret.js" charset="utf-8"></script>
+	  <script src="../src/cloud.js" charset="utf-8"></script>
+	  <link rel="stylesheet" href="../src/style.css" />
+		<script>
+			// toggle the pixel
+			function toggle_pixel(name, value) {
+				// name is of form "LEDXY" so get (X,Y) location:
+				var row = parseInt(name.toString().substring(3,4));
+				var col = parseInt(name.toString().substring(4,5));
+				// set brightness of that pixel to new value
+				mySPIKE.PrimeHub().light_matrix.set_pixel(col,row,parseInt(value));
+			}
+			// need a sleep function
+			// - from: https://www.sitepoint.com/delay-sleep-pause-wait/
+			function sleep(ms) {
+				return new Promise(resolve => setTimeout(resolve, ms));
+			}
+			// go through all data points from the cloud and set them
+			async function reset_pixels() {
+				for (var row = 0; row < 5; row++) {
+					for (var col = 0; col < 5; col++) {
+						var current = cloud_get('LED' + row.toString() + col.toString());
+						mySPIKE.PrimeHub().light_matrix.set_pixel(col,row,parseInt(current));
+						await sleep(100);
+					}
+				}
+			}
+			// function to run when page loads (before ServiceDock/etc has been set up)
+			function onload_pre() {
+				monitor_cloud_frequency = 500; // monitor faster than default
+			}
+			// function to run when page loads (and ServiceDock/etc has been set up)
+			function onload_post() {
+				// set the SPIKE init function to reset to data in the database
+				mySPIKE.executeAfterInit(reset_pixels);
+			}
+		</script>
+	</head>
+<body>
+
+	<!-- SERVICE DOCK -->
+	<div id="servicedock">
+		<service-systemlink id="service_systemlink"></service-systemlink>
+		<service-spike id="service_spike"></service-spike>
+	</div>
+
+	<h1>Project: LED Matching Challenge</h1>
+
+  <p>Toggle the SPIKE Prime LEDs to try and match the pattern!</p>
+
+	<div class="cloud_check">
+		<p>
+	    <b>To use the SPIKE™ Prime hardware,</b> you must enable the WebSerial API in your browser. To do so, please make sure:
+	    <ul>
+	        <li>You are using the Google Chrome browser.</li>
+	        <li>The following chrome flags are enabled on <b>chrome://flags</b>.</li>
+	        <ul>
+	          <li>Mac OSX user? <em>#enable-experimental-web-platform-features</em></li>
+	          <li>Windows user? <em>#enable-experimental-web-platform-features</em> <b>AND</b> <em>#new-usb-backend</em></li>
+	        </ul>
+	    </ul>
+
+	    <b>To enable these flags:</b>
+	    <ol>
+	        <li>In your Browser URL, visit <b>chrome://flags</b></li>
+	        <li>Set the your required flags to "Enabled" via dropdown</li>
+	        <li>Relaunch the browser to have changes take effect</li>
+	        <li>Revisit this page and activate the SPIKE™ Prime Service Dock (top right)</li>
+	    </ol>
+	  </p>
+	</div>
+
+	<h2>SPIKE Control Interface</h2>
+
+	<div class="cloud_check">
+		<b><em>Monitor Cloud:</em></b>
+
+		<p style="color:red;">FIRST ROW OF LEDS</p>
+	  <div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED00">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED01">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED02">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED03">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED04">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+
+		<p style="color:red;">SECOND ROW OF LEDS</p>
+	  <div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED10">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED11">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED12">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED13">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED14">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+
+		<p style="color:red;">THIRD ROW OF LEDS</p>
+	  <div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED20">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED21">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED22">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED23">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED24">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+
+		<p style="color:red;">FOURTH ROW OF LEDS</p>
+	  <div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED30">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED31">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED32">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED33">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED34">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+
+		<p style="color:red;">FIFTH ROW OF LEDS</p>
+	  <div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED40">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED41">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED42">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED43">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+		<div type="cloud_check" cloud_compare="changes" cloud_action="run_js">
+			<input type=text id="cloud_name" value="LED44">
+      <input type=text id="cloud_action_val" value="toggle_pixel">
+    </div>
+
+	</div>
+
+	<!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+</body>
+</html>
