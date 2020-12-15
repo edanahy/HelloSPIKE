@@ -31,3 +31,9 @@ This project pits two remote players against each other, each using a SPIKE Prim
 ### Project: Draw My Face
 
 A work in progress coming soon ... stay tuned!
+
+### Disclaimer
+
+LEGO®, the LEGO® logo, the Brick, MINDSTORMS®, SPIKE™, and the Minifigure are trademarks of ©The LEGO® Group. All other trademarks and copyrights are the property of their respective owners. All rights reserved.
+
+This page isn’t affiliated, authorized, or endorsed by The LEGO Group.
