@@ -2,16 +2,26 @@
   <title>Hello SPIKE Experimental Projects</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    td {
+    .header td {
       padding: 10px;
       vertical-align: top;
+    }
+    .interface {
+      width: 418px;
+      border: 1px solid gray;
+    }
+    .interface td {
+      text-align: center;
+    }
+    .details {
+      font-size: small;
     }
   </style>
 </head>
 <body>
 
   <!-- WELCOME -->
-  <p><table>
+  <p><table class='header'>
     <tr><td style="text-align: center; vertical-align: middle;">
       <img src="./img/HelloSPIKE.png" width="100px" height="100px">
     </td><td style="text-align: center; vertical-align: middle;">
@@ -20,69 +30,138 @@
 
   <p>A collection of experimental web-controlled SPIKE Prime projects.</p>
 
-  <h3>Project: Display Text</h3>
+  <h2>Project: Display Text</h2>
 
   <blockquote>
 
-    <p><a href="./DisplayText/index.html" target=_blank>DisplayText</a></p>
+    <p><b>Description:</b> A simple demonstration of web-based remote control of the SPIKE Prime.</p>
 
-    <p><a href="./DisplayText/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+    <p><img src='./DisplayText/thumb_DisplayText.gif'></p>
+
+    <table class="interface">
+      <tr><th>Remote Interface</th><th>SPIKE Control Interface</th></tr>
+      <tr>
+        <td><a href="./DisplayText/index.html" target=_blank>Display Text</a></td>
+        <td>
+          <a href="./DisplayText/SPIKEControl.html" target=_blank>SPIKE Control</a>
+          <br><span class='details'>(no build necessary)</span>
+        </td>
+      </tr>
+    </table>
 
   </blockquote>
 
-  <h3>Project: Motor Control Challenge</h3>
+  <h2>Project: Motor Control Challenge</h2>
 
   <blockquote>
 
-    <p><a href="./MotorControl/index.html" target=_blank>Motor Control Challenge</a></p>
+    <p><b>Description:</b> Change the motor speed to try and stop the pointer straight up!</p>
 
-    <p><a href="./MotorControl/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+    <p><img src='./MotorControl/thumb_MotorControl.png'></p>
+
+    <table class="interface">
+      <tr><th>Remote Interface</th><th>SPIKE Control Interface</th></tr>
+      <tr>
+        <td><a href="./MotorControl/index.html" target=_blank>Motor Control Challenge</a></td>
+        <td>
+          <a href="./MotorControl/SPIKEControl.html" target=_blank>SPIKE Control</a>
+          <br><span class='details'>(<a href='https://docs.google.com/presentation/d/1mJocURYhKTREILhA1RT9PZfyO_GbQvhapKy_znGw2YA/edit?usp=sharing' target=_blank>SPIKE build instructions</a>)</span>
+        </td>
+      </tr>
+    </table>
 
   </blockquote>
 
-  <h3>Project: LED Matching Challenge</h3>
+  <h2>Project: LED Matching Challenge</h2>
 
   <blockquote>
 
-    <p><a href="./LEDMatching/index.html" target=_blank>LED Matching Challenge</a></p>
+    <p><b>Description:</b> Toggle the SPIKE Prime LEDs to try and match the pattern!</p>
 
-    <p><a href="./LEDMatching/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+    <p><img src='./LEDMatching/thumb_LEDMatching.png'></p>
+
+    <table class="interface">
+      <tr><th>Remote Interface</th><th>SPIKE Control Interface</th></tr>
+      <tr>
+        <td><a href="./LEDMatching/index.html" target=_blank>LED Matching Challenge</a></td>
+        <td>
+          <a href="./LEDMatching/SPIKEControl.html" target=_blank>SPIKE Control</a>
+          <br><span class='details'>(no build necessary)</span>
+        </td>
+      </tr>
+    </table>
 
   </blockquote>
 
-  <h3>Project: Web IDE (Integrated Development Environment)</h3>
+  <h2>Project: Web IDE (Integrated Development Environment)</h2>
 
   <blockquote>
 
-    <p><a href="./WebIDE/index.html" target=_blank>Browser-based Web IDE</a></p>
+    <p><b>Description:</b> A browser-based Integrated Development Environment (IDE) for SPIKE Prime.</p>
 
-    <p><a href="./WebIDE/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+    <p><img src='./WebIDE/thumb_WebIDE.png'></p>
+
+    <table class="interface">
+      <tr><th>Remote Interface</th><th>SPIKE Control Interface</th></tr>
+      <tr>
+        <td><a href="./WebIDE/index.html" target=_blank>Browser-based Web IDE</a></td>
+        <td>
+          <a href="./WebIDE/SPIKEControl.html" target=_blank>SPIKE Control</a>
+          <br><span class='details'>(SPIKE build depends on code)</span>
+        </td>
+      </tr>
+    </table>
 
   </blockquote>
 
-  <h3>Project: Marble Maze</h3>
+  <h2>Project: Marble Maze</h2>
 
   <blockquote>
 
-    <p><a href="./MarbleMaze/index.html" target=_blank>Marble Maze</a></p>
+    <p><b>Description:</b> Control the maze to navigate the marble to the finish.</p>
 
-    <p><a href="./MarbleMaze/SPIKEControl.html" target=_blank>SPIKE Control</a></p>
+    <p><img src='./MarbleMaze/thumb_MarbleMaze.png'></p>
+
+    <table class="interface">
+      <tr><th>Remote Interface</th><th>SPIKE Control Interface</th></tr>
+      <tr>
+        <td><a href="./MarbleMaze/index.html" target=_blank>Marble Maze Control</a></td>
+        <td>
+          <a href="./MarbleMaze/SPIKEControl.html" target=_blank>SPIKE Control</a>
+          <br><span class='details'>(requires access to Marble Maze build)</span>
+        </td>
+      </tr>
+    </table>
 
   </blockquote>
 
-  <h3>Project: Two-Player Rock-Paper-Scissors</h3>
+  <h2>Project: Two-Player Rock-Paper-Scissors</h2>
 
   <blockquote>
 
-    <p>Note: this requires two SPIKE Primes</p>
+    <p><b>Description:</b> Two remote players, each with a SPIKE Prime, play Rock-Paper-Scissors.</p>
 
-    <p><a href="./RPS/player1.html" target=_blank>Player 1 Interface</a></p>
+    <p><img src='./RPS/thumb_RPS.png'></p>
 
-    <p><a href="./RPS/player2.html" target=_blank>Player 2 Interface</a></p>
+    <p><em>Note: this requires two SPIKE Primes</em></p>
+
+    <table class="interface">
+      <tr><th>Player 1 Interface</th><th>Player 2 Interface</th></tr>
+      <tr>
+        <td>
+          <a href="./RPS/player1.html" target=_blank>Player 1</a>
+          <br><span class='details'>(Motor: Port A, Force Sensor: Port B)</span>
+        </td>
+        <td>
+          <a href="./RPS/player2.html" target=_blank>Player 2</a>
+          <br><span class='details'>(Motor: Port A, Force Sensor: Port B)</span>
+        </td>
+      </tr>
+    </table>
 
   </blockquote>
 
-  <h3><em>Coming Soon:</em> Draw My Face</h3>
+  <h2><em>Coming Soon:</em> Draw My Face</h2>
 
   <blockquote>
 

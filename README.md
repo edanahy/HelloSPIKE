@@ -10,31 +10,43 @@ https://edanahy.github.io/HelloSPIKE/
 
 ### Project: Display Text
 
-A simple demonstration of web-based remote control of the SPIKE Prime.
+**Description:** A simple demonstration of web-based remote control of the SPIKE Prime.
+
+![Display Text Thumbnail](https://edanahy.github.io/HelloSPIKE/DisplayText/thumb_DisplayText.gif)
 
 ### Project: Motor Control Challenge
 
-Change the motor speed to try and stop the pointer straight up!
+**Description:** Change the motor speed to try and stop the pointer straight up!
+
+![Motor Control Thumbnail](https://edanahy.github.io/HelloSPIKE/MotorControl/thumb_MotorControl.png)
 
 ### Project: LED Matching Challenge
 
-Toggle the SPIKE Prime LEDs to try and match the pattern!
+**Description:** Toggle the SPIKE Prime LEDs to try and match the pattern!
+
+![LED Matching Thumbnail](https://edanahy.github.io/HelloSPIKE/LEDMatching/thumb_LEDMatching.png)
 
 ### Project: Web IDE (Integrated Development Environment)
 
-Create a web-based Integrated Development Environment (IDE) for SPIKE Prime.
+**Description:** Create a web-based Integrated Development Environment (IDE) for SPIKE Prime.
+
+![Web IDE Thumbnail](https://edanahy.github.io/HelloSPIKE/WebIDE/thumb_WebIDE.png)
 
 ### Project: Marble Maze
 
-Control the maze to navigate the marble to the finish.
+**Description:** Control the maze to navigate the marble to the finish.
+
+![Marble Maze Thumbnail](https://edanahy.github.io/HelloSPIKE/MarbleMaze/thumb_MarbleMaze.png)
 
 ### Project: Two-Player Rock-Paper-Scissors
 
-This project pits two remote players against each other, each using a SPIKE Prime to play Rock-Paper Scissors
+**Description:** This project pits two remote players against each other, each using a SPIKE Prime to play Rock-Paper-Scissors
+
+![RPS Thumbnail](https://edanahy.github.io/HelloSPIKE/RPS/thumb_RPS.png)
 
 ### Project: Draw My Face
 
-A work in progress coming soon ... stay tuned!
+**Description:** A work in progress coming soon ... stay tuned!
 
 ### Disclaimer
 
