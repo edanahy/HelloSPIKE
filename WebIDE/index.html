@@ -1,0 +1,152 @@
+<html>
+  <title>Project: Web IDE (Remote)</title>
+  <head>
+    <script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+    <script src="../src/secret.js" charset="utf-8"></script>
+    <script src="../src/cloud.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../src/style.css" />
+    <script>
+      var myCodeMirror = null;
+      function onload_post() {
+        var cm_options = {
+          lineWrapping: true,
+          lineNumbers: true
+        };
+        // set up the CodeMirror Textareas
+        myCodeMirror = CodeMirror.fromTextArea(
+          document.getElementById('ide'), cm_options
+        );
+        // on change update the (now hidden) IDE textarea
+        myCodeMirror.on(
+          "change",
+          function() { document.getElementById('ide').value = myCodeMirror.doc.getValue(); }
+        );
+        myCodeMirror.setSize(700,300);
+        // go through all the code snippets and set up those textareas as CodeMirror elements
+        var i = 0;
+        var code_pointer = null;
+        while (code_pointer = document.getElementById('code' + i)) {
+          CodeMirror.fromTextArea(
+            code_pointer, cm_options
+          ).setSize(500,150);
+          i = i + 1;
+        }
+      }
+      function replace_ide(new_code_id) {
+        myCodeMirror.doc.setValue(document.getElementById(new_code_id).value);
+      }
+      function append_ide(new_code_id) {
+        myCodeMirror.doc.setValue(myCodeMirror.doc.getValue() + document.getElementById(new_code_id).value);
+      }
+    </script>
+    <!-- CODE MIRROR for Web IDE       -->
+    <!-- From: https://codemirror.net/ -->
+    <script src="./codemirror/codemirror.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="./codemirror/codemirror.css" />
+    <script src="./codemirror/python.js" charset="utf-8"></script>
+  </head>
+<body>
+
+  <!-- SERVICE DOCK -->
+  <div id="servicedock">
+    <service-systemlink id="service_systemlink"></service-systemlink>
+  </div>
+
+    <h1>Project: Web IDE</h1>
+
+    <p>A demonstration of creating an Integrated Development Environment (IDE) for SPIKE Prime.
+      This allows a user, from anywhere in the world, to be able to write MicroPython code and
+      download-and-run on a remote SPIKE Prime robot.</p>
+
+    <h2>Remote Interface</h2>
+
+    <p>Need help writing MicroPython?
+      <a href='./SPIKE_Prime_Python_Knowledge_Base.htm' target=_blank>Here's the
+        MicroPython for SPIKE Prime Kowledge Base.</a></p>
+
+    <form cloud_form='textarea'>
+      <textarea id='ide' cloud_action='update' cloud_name='IDE_code' cols=80 rows=10># MicroPython for LEGO Hardware (LEGO Education's SPIKE Prime)
+from spike import PrimeHub, LightMatrix, Button, StatusLight, ForceSensor, MotionSensor, Speaker, ColorSensor, App, DistanceSensor, Motor, MotorPair
+from spike.control import wait_for_seconds, wait_until, Timer
+
+hub = PrimeHub()
+
+hub.light_matrix.show_image('HAPPY')
+</textarea>
+      <br /><br />
+      <input type='Submit' value='Submit and Run SPIKE Prime Code'>
+    </form>
+
+    <button cloud_action='update' cloud_name='IDE_command'>Stop Program</button>
+
+    <h3>Code Snippets</h3>
+
+    <blockquote>
+
+      <p>Use the following code snippets to try them out!</p>
+
+      <p>
+        <b>Code Snippet #1</b>
+        <input type=button value='Replace IDE' onclick='replace_ide("code0");'>
+        <input type=button value='Append to IDE' onclick='append_ide("code0");'>
+        <br />
+        <textarea id='code0' cols=80 rows=10>from spike import PrimeHub
+from spike.control import wait_for_seconds
+hub = PrimeHub()
+hub.light_matrix.show_image('HAPPY')
+wait_for_seconds(1)
+hub.light_matrix.show_image('SAD')
+wait_for_seconds(1)
+hub.light_matrix.show_image('DUCK')
+wait_for_seconds(1)
+hub.light_matrix.write('Done...')
+</textarea>
+      </p>
+
+      <p>
+        <b>Code Snippet #2</b>
+        <input type=button value='Replace IDE' onclick='replace_ide("code1");'>
+        <input type=button value='Append to IDE' onclick='append_ide("code1");'>
+        <br />
+        <textarea id='code1' cols=80 rows=10>from spike import Motor
+from spike.control import wait_for_seconds
+my_motor = Motor('A')
+my_motor.start(50)
+wait_for_seconds(2)
+my_motor.stop()
+</textarea>
+      </p>
+
+    </blockquote>
+
+  <hr />
+
+  <p>Do you have a SPIKE Prime?
+    <a href="./SPIKEControl.html" target=_blank>Here is the SPIKE Prime Control page.</a>
+  </p>
+
+  <!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+  <hr />
+
+  <p style='font-size:small'>LEGO®, the LEGO® logo, the Brick, MINDSTORMS®, SPIKE™, and the Minifigure
+    are trademarks of ©The LEGO® Group. All other trademarks and copyrights
+    are the property of their respective owners. All rights reserved.</p>
+
+  <p style='font-size:small'>This page isn’t affiliated, authorized, or endorsed by The LEGO Group.</p>
+
+</body>
+</html>

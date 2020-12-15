@@ -1,0 +1,95 @@
+<html>
+	<title>Project: Web IDE (Local)</title>
+	<head>
+		<script src="https://cdn.jsdelivr.net/gh/tuftsceeo/SPIKE-Web-Interface/cdn/ServiceDock.js" charset="utf-8"></script>
+	  <script src="../src/secret.js" charset="utf-8"></script>
+	  <script src="../src/cloud.js" charset="utf-8"></script>
+	  <link rel="stylesheet" href="../src/style.css" />
+		<script>
+		// function to run when page loads (before ServiceDock/etc has been set up)
+		function onload_pre() {
+			monitor_cloud_frequency = 500; // monitor faster than default
+		}
+		</script>
+	</head>
+<body>
+
+	<!-- SERVICE DOCK -->
+	<div id="servicedock">
+		<service-systemlink id="service_systemlink"></service-systemlink>
+		<service-spike id="service_spike"></service-spike>
+	</div>
+
+	<h1>Project: Web IDE</h1>
+
+	<p>A demonstration of creating an Integrated Development Environment (IDE) for SPIKE Prime.
+		This allows a user, from anywhere in the world, to be able to write MicroPython code and
+		download-and-run on a remote SPIKE Prime robot.</p>
+
+	<div class="cloud_check">
+		<p>
+	    <b>To use the SPIKE™ Prime hardware,</b> you must enable the WebSerial API in your browser. To do so, please make sure:
+	    <ul>
+	        <li>You are using the Google Chrome browser.</li>
+	        <li>The following chrome flags are enabled on <b>chrome://flags</b>.</li>
+	        <ul>
+	          <li>Mac OSX user? <em>#enable-experimental-web-platform-features</em></li>
+	          <li>Windows user? <em>#enable-experimental-web-platform-features</em> <b>AND</b> <em>#new-usb-backend</em></li>
+	        </ul>
+	    </ul>
+
+	    <b>To enable these flags:</b>
+	    <ol>
+	        <li>In your Browser URL, visit <b>chrome://flags</b></li>
+	        <li>Set the your required flags to "Enabled" via dropdown</li>
+	        <li>Relaunch the browser to have changes take effect</li>
+	        <li>Revisit this page and activate the SPIKE™ Prime Service Dock (top right)</li>
+	    </ol>
+	  </p>
+	</div>
+
+  <h2>SPIKE Control Interface</h2>
+
+	<div class="cloud_check">
+		<b><em>Monitor Cloud:</em></b>
+
+	  <div type="cloud_check" cloud_compare="changes" cloud_action="download_code">
+			<input type=text id="cloud_name" value="IDE_code">
+      <input type=text id="cloud_action_val" value="0">
+			<textarea id="cloud_code">REPLACE[cloud_current]</textarea>
+			<input type=text id="cloud_reset" value=".">
+    </div>
+
+		<div type="cloud_check" cloud_compare="equal" cloud_action="stop_slot">
+			<input type=text id="cloud_name" value="IDE_command">
+			<input type=text id="cloud_value" value="Stop Program">
+			<input type=text id="cloud_reset" value=".">
+		</div>
+
+	</div>
+
+	<!-- footer -->
+  <hr />
+
+  <p><a href="../index.html">Return back to the main Hello SPIKE project listing.</a></p>
+
+  <p>Project and Documentation created by Tufts Center for Engineering Education and Outreach:</p>
+
+  <p>
+    <a href="http://ceeo.tufts.edu" target=_blank><img src="../img/TuftsCEEO.png"></a>
+    <br><br>
+    For more information about Tufts CEEO, please visit: <a href="http://ceeo.tufts.edu" target=_blank>http://ceeo.tufts.edu</a>
+  </p>
+
+  <p>For other experimental projects from Tufts CEEO: <a href="http://ceeoinnovations.org" target=_blank>CEEO Innovations</a></p>
+
+	<hr />
+
+  <p style='font-size:small'>LEGO®, the LEGO® logo, the Brick, MINDSTORMS®, SPIKE™, and the Minifigure
+    are trademarks of ©The LEGO® Group. All other trademarks and copyrights
+    are the property of their respective owners. All rights reserved.</p>
+
+  <p style='font-size:small'>This page isn’t affiliated, authorized, or endorsed by The LEGO Group.</p>
+	
+</body>
+</html>

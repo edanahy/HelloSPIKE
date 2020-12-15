@@ -20,6 +20,10 @@ Change the motor speed to try and stop the pointer straight up!
 
 Toggle the SPIKE Prime LEDs to try and match the pattern!
 
+### Project: Web IDE (Integrated Development Environment)
+
+Create a web-based Integrated Development Environment (IDE) for SPIKE Prime.
+
 ### Project: Marble Maze
 
 Control the maze to navigate the marble to the finish.
